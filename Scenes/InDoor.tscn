@@ -1,3 +1,41 @@
-[gd_scene format=2]
+[gd_scene load_steps=4 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://Spritesheets/grass.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 512, 300 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Grass Animation"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Grass:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 1 ]
+}
+
+[node name="Floor" type="Area2D"]
+position = Vector2( 16, 16 )
+
+[node name="GrassCol" type="CollisionShape2D" parent="."]
+position = Vector2( 496, 284 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Grass" type="Sprite" parent="."]
+position = Vector2( 24, 24 )
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 1 )
+vframes = 2
+region_rect = Rect2( 0, 0, 10000, 10000 )
+
+[node name="GrassAnimation" type="AnimationPlayer" parent="."]
+autoplay = "Grass Animation"
+"anims/Grass Animation" = SubResource( 2 )

@@ -69,4 +69,3 @@ root_node = NodePath("../..")
 "anims/Player Animation" = SubResource( 3 )
 
 [connection signal="body_entered" from="Door" to="Player" method="_on_Door_body_entered"]
-[connection signal="ready" from="Player" to="Player" method="_on_Player_ready"]
