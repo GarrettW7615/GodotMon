@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Hometown Song.mp3-50d3427a08956cc255ca2a5d4db22fe1.mp3str"
+
+[deps]
+
+source_file="res://Music/Hometown Song.mp3"
+dest_files=[ "res://.import/Hometown Song.mp3-50d3427a08956cc255ca2a5d4db22fe1.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
