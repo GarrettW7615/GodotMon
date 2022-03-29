@@ -51,8 +51,12 @@ func get_input():
 	if !Input.is_action_pressed("up") and !Input.is_action_pressed("down") and !Input.is_action_pressed("left") and !Input.is_action_pressed("right"):
 		if lastActionPressed == "up":
 			$PlayerSpriteAnimated.play("facingBack")
-		else:
+		if lastActionPressed == "down":
 			$PlayerSpriteAnimated.play("idle")
+		if lastActionPressed == "left":
+			$PlayerSpriteAnimated.play("idleLeft")
+		if lastActionPressed == "right":
+			$PlayerSpriteAnimated.play("idleRight")
 	
 	velocity = velocity.normalized() * speed
 	speed = speed/2

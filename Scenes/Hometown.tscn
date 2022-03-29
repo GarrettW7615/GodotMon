@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://Spritesheets/grass.png" type="Texture" id=1]
 [ext_resource path="res://Resources/tree.png" type="Texture" id=2]
@@ -136,20 +136,20 @@ extents = Vector2( 15, 5 )
 [sub_resource type="RectangleShape2D" id=35]
 extents = Vector2( 10, 27.5 )
 
-[sub_resource type="AtlasTexture" id=27]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=28]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 32, 32, 32 )
-
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 5 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 11 )
 region = Rect2( 0, 32, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=15]
@@ -160,14 +160,6 @@ region = Rect2( 0, 0, 32, 32 )
 atlas = ExtResource( 14 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=29]
-atlas = ExtResource( 12 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=30]
-atlas = ExtResource( 12 )
-region = Rect2( 0, 32, 32, 32 )
-
 [sub_resource type="AtlasTexture" id=31]
 atlas = ExtResource( 13 )
 region = Rect2( 0, 0, 32, 32 )
@@ -176,16 +168,32 @@ region = Rect2( 0, 0, 32, 32 )
 atlas = ExtResource( 13 )
 region = Rect2( 0, 32, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 32, 32 )
+
 [sub_resource type="SpriteFrames" id=14]
 animations = [ {
-"frames": [ SubResource( 27 ), SubResource( 28 ) ],
-"loop": true,
-"name": "right",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 27 ), SubResource( 28 ) ],
+"loop": true,
+"name": "right",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 15 ) ],
@@ -198,14 +206,24 @@ animations = [ {
 "name": "facingBack",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 31 ), SubResource( 32 ) ],
+"loop": true,
+"name": "forward",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 29 ), SubResource( 30 ) ],
 "loop": true,
 "name": "backward",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 31 ), SubResource( 32 ) ],
+"frames": [ SubResource( 48 ) ],
 "loop": true,
-"name": "forward",
+"name": "idleLeft",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 49 ) ],
+"loop": true,
+"name": "idleRight",
 "speed": 5.0
 } ]
 
@@ -9023,6 +9041,37 @@ position = Vector2( 1229, 205 )
 rotation = -3.14159
 shape = SubResource( 46 )
 
+[node name="Cliff2" type="StaticBody2D" parent="Floor/Cliffs"]
+position = Vector2( 1713, -1224 )
+rotation = 1.5708
+
+[node name="Cliff" type="Sprite" parent="Floor/Cliffs/Cliff2"]
+position = Vector2( 1229, 195 )
+texture = ExtResource( 35 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 173, 32 )
+
+[node name="CliffCol" type="CollisionShape2D" parent="Floor/Cliffs/Cliff2"]
+position = Vector2( 1229, 205 )
+rotation = -3.14159
+shape = SubResource( 46 )
+one_way_collision = true
+
+[node name="CliffColLeft" type="CollisionShape2D" parent="Floor/Cliffs/Cliff2"]
+position = Vector2( 1142.5, 205 )
+shape = SubResource( 47 )
+
+[node name="CliffColRight" type="CollisionShape2D" parent="Floor/Cliffs/Cliff2"]
+position = Vector2( 1315.5, 205 )
+shape = SubResource( 47 )
+
+[node name="Area" type="Area2D" parent="Floor/Cliffs/Cliff2"]
+
+[node name="CliffCol" type="CollisionShape2D" parent="Floor/Cliffs/Cliff2/Area"]
+position = Vector2( 1229, 205 )
+rotation = -3.14159
+shape = SubResource( 46 )
+
 [node name="Paths" type="Node2D" parent="Floor"]
 
 [node name="PathHorizontal" type="Sprite" parent="Floor/Paths"]
@@ -14512,7 +14561,7 @@ script = ExtResource( 3 )
 position = Vector2( 2, 0.334717 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 14 )
-animation = "facingBack"
+animation = "idleRight"
 speed_scale = 0.75
 
 [node name="PlayerCol" type="CollisionShape2D" parent="Player"]
@@ -15106,6 +15155,7 @@ stream = ExtResource( 32 )
 [connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 256" to="Floor/Tall Grass/Tall Grass 256" method="_on_Tall_Grass_1_body_entered"]
 [connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 256/Tall Grass" to="Floor/Tall Grass/Tall Grass 256" method="_on_Tall_Grass_animation_finished"]
 [connection signal="body_entered" from="Floor/Cliffs/Cliff/Area" to="Player/Tweens" method="_on_Area_body_entered"]
+[connection signal="body_entered" from="Floor/Cliffs/Cliff2/Area" to="Player/Tweens" method="_on_Area_body_entered"]
 [connection signal="body_entered" from="Floor/Stairs/Home Stairs" to="Player" method="_on_Home_Stairs_body_entered"]
 [connection signal="body_entered" from="Floor/Stairs/PlayerRoom Stairs" to="Player" method="_on_PlayerRoom_Stairs_body_entered"]
 [connection signal="body_entered" from="Loading Zones/Player House" to="Player" method="_on_Player_House_body_entered"]
