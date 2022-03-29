@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/stairSound.mp3-ecc8da82857802b5de94eab81053b426.mp3str"
+
+[deps]
+
+source_file="res://Music/stairSound.mp3"
+dest_files=[ "res://.import/stairSound.mp3-ecc8da82857802b5de94eab81053b426.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

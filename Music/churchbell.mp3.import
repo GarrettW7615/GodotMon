@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/churchbell.mp3-a2613fce233dacb7db75a795f92d71a7.mp3str"
+
+[deps]
+
+source_file="res://Music/churchbell.mp3"
+dest_files=[ "res://.import/churchbell.mp3-a2613fce233dacb7db75a795f92d71a7.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
