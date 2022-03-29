@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Spritesheets/grass.png" type="Texture" id=1]
 [ext_resource path="res://Resources/tree.png" type="Texture" id=2]
@@ -32,6 +32,10 @@
 [ext_resource path="res://Scenes/Battle.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=31]
 [ext_resource path="res://Music/BattleMusic.mp3" type="AudioStream" id=32]
+[ext_resource path="res://Resources/Path_changeDirection_twoway.png" type="Texture" id=33]
+[ext_resource path="res://Resources/Path_vertical.png" type="Texture" id=34]
+[ext_resource path="res://Resources/cliff.png" type="Texture" id=35]
+[ext_resource path="res://Scripts/CliffAnim.gd" type="Script" id=36]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 300 )
@@ -97,22 +101,28 @@ animations = [ {
 extents = Vector2( 14, 12 )
 
 [sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 16, 496 )
+extents = Vector2( 16, 192 )
 
 [sub_resource type="RectangleShape2D" id=18]
-extents = Vector2( 208, 8 )
+extents = Vector2( 88, 8 )
 
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 16, 8 )
 
 [sub_resource type="RectangleShape2D" id=20]
-extents = Vector2( 248, 8 )
+extents = Vector2( 128, 8 )
 
 [sub_resource type="RectangleShape2D" id=26]
 extents = Vector2( 16, 4 )
 
+[sub_resource type="RectangleShape2D" id=46]
+extents = Vector2( 87, 6 )
+
+[sub_resource type="RectangleShape2D" id=47]
+extents = Vector2( 0.5, 6 )
+
 [sub_resource type="RectangleShape2D" id=34]
-extents = Vector2( 8, 8 )
+extents = Vector2( 8, 7.25 )
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 10, 14.5 )
@@ -126,20 +136,20 @@ extents = Vector2( 15, 5 )
 [sub_resource type="RectangleShape2D" id=35]
 extents = Vector2( 10, 27.5 )
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 32, 32, 32 )
-
 [sub_resource type="AtlasTexture" id=27]
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=28]
 atlas = ExtResource( 11 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
 region = Rect2( 0, 32, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=15]
@@ -168,14 +178,14 @@ region = Rect2( 0, 32, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=14]
 animations = [ {
-"frames": [ SubResource( 12 ), SubResource( 13 ) ],
-"loop": true,
-"name": "left",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 27 ), SubResource( 28 ) ],
 "loop": true,
 "name": "right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "left",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 15 ) ],
@@ -4739,16 +4749,19 @@ playing = true
 [node name="Still Grass Tiles" type="Node2D" parent="Floor"]
 
 [node name="GrassStill" type="Sprite" parent="Floor/Still Grass Tiles"]
-position = Vector2( 1168, 422 )
+position = Vector2( 1758, 421 )
 texture = ExtResource( 21 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 320, 320 )
+region_rect = Rect2( 0, 0, 1500, 320 )
 
 [node name="GrassStill2" type="Sprite" parent="Floor/Still Grass Tiles"]
-position = Vector2( 1168, 70 )
+position = Vector2( 1758, 70 )
 texture = ExtResource( 21 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 320, 320 )
+region_rect = Rect2( 0, 0, 1500, 320 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tall Grass" type="Node2D" parent="Floor"]
 
@@ -5779,15 +5792,3087 @@ position = Vector2( 1017, 282 )
 scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 43 )
 
+[node name="Tall Grass 65" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 65"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 65"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 66" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 66"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 66"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 67" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 67"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 67"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 68" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 68"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 68"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 69" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 69"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 69"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 70" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 70"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 70"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 71" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 71"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 71"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 72" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 72"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 72"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 73" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 73"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 73"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 74" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 74"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 74"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 75" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 75"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 75"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 76" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 76"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 76"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 77" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 77"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 77"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 78" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 78"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 78"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 79" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 79"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 79"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 80" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 80"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 80"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 81" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 81"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 81"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 82" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 82"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 82"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 83" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 83"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 83"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 84" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 84"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 84"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 85" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 85"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 85"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 86" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -175 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 86"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 86"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 87" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 87"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 87"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 88" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -161 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 88"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 88"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 89" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 89"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 89"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 90" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 90"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 90"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 91" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 91"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 91"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 92" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 92"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 92"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 93" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 93"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 93"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 94" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -147 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 94"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 94"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 95" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 95"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 95"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 96" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -133 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 96"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 96"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 97" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 97"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 97"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 98" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 98"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 98"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 99" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 99"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 99"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 100" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 100"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 100"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 101" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 101"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 101"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 102" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 102"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 102"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 103" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 103"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 103"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 104" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 104"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 104"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 105" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 105"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 105"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 106" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 106"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 106"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 107" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( -7, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 107"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 107"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 108" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 10, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 108"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 108"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 109" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 109"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 109"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 110" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 110"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 110"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 111" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 27, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 111"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 111"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 112" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 44, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 112"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 112"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 113" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 113"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 113"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 114" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 114"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 114"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 115" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 115"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 115"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 116" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 116"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 116"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 117" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 117"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 117"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 118" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -119 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 118"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 118"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 119" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 119"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 119"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 120" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -105 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 120"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 120"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 121" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 121"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 121"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 122" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 122"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 122"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 123" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 61, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 123"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 123"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 124" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 78, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 124"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 124"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 125" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 125"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 125"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 126" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -91 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 126"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 126"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 127" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 95, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 127"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 127"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 128" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 112, -77 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 128"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 128"]
+position = Vector2( 1024, 283 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 129" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 129"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 129"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 130" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 130"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 130"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 131" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 131"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 131"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 132" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 132"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 132"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 133" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 133"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 133"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 134" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 134"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 134"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 135" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 135"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 135"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 136" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 136"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 136"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 137" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 137"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 137"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 138" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 138"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 138"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 139" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 139"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 139"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 140" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 140"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 140"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 141" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 141"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 141"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 142" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 142"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 142"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 143" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 143"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 143"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 144" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 144"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 144"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 145" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 145"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 145"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 146" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 146"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 146"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 147" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 147"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 147"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 148" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 148"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 148"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 149" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 149"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 149"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 150" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -173 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 150"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 150"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 151" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 151"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 151"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 152" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -159 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 152"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 152"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 153" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 153"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 153"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 154" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 154"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 154"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 155" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 155"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 155"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 156" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 156"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 156"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 157" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 157"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 157"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 158" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -145 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 158"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 158"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 159" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 159"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 159"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 160" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -131 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 160"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 160"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 161" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 161"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 161"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 162" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 162"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 162"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 163" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 163"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 163"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 164" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 164"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 164"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 165" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 165"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 165"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 166" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 166"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 166"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 167" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 167"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 167"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 168" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 168"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 168"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 169" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 169"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 169"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 170" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 170"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 170"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 171" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 171"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 171"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 172" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 172"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 172"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 173" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 173"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 173"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 174" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 174"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 174"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 175" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 175"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 175"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 176" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 176"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 176"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 177" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 177"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 177"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 178" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 178"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 178"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 179" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 179"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 179"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 180" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 180"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 180"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 181" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 181"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 181"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 182" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -117 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 182"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 182"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 183" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 183"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 183"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 184" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -103 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 184"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 184"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 185" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 185"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 185"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 186" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 186"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 186"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 187" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 187"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 187"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 188" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 188"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 188"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 189" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 189"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 189"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 190" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -89 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 190"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 190"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 191" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 191"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 191"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 192" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -75 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 192"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 192"]
+position = Vector2( 1017, 281 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 193" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 193"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 193"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 194" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 194"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 194"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 195" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 195"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 195"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 196" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 196"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 196"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 197" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 197"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 197"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 198" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 198"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 198"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 199" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 199"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 199"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 200" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 200"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 200"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 201" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 201"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 201"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 202" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 202"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 202"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 203" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 203"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 203"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 204" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 204"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 204"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 205" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 205"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 205"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 206" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 206"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 206"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 207" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 207"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 207"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 208" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 208"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 208"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 209" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 209"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 209"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 210" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 210"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 210"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 211" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 211"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 211"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 212" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 212"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 212"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 213" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 213"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 213"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 214" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -330 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 214"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 214"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 215" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 215"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 215"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 216" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -316 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 216"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 216"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 217" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 217"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 217"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 218" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 218"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 218"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 219" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 219"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 219"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 220" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 220"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 220"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 221" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 221"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 221"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 222" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -302 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 222"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 222"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 223" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 223"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 223"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 224" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -288 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 224"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 224"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 225" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 225"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 225"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 226" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 226"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 226"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 227" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 227"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 227"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 228" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 228"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 228"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 229" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 229"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 229"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 230" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 230"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 230"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 231" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 231"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 231"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 232" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 232"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 232"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 233" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 233"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 233"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 234" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 234"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 234"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 235" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 310, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 235"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 235"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 236" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 327, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 236"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 236"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 237" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 237"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 237"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 238" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 238"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 238"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 239" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 344, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 239"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 239"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 240" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 361, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 240"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 240"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 241" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 241"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 241"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 242" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 242"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 242"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 243" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 243"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 243"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 244" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 244"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 244"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 245" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 245"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 245"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 246" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -274 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 246"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 246"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 247" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 247"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 247"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 248" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -260 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 248"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 248"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 249" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 249"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 249"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 250" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 250"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 250"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 251" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 378, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 251"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 251"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 252" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 395, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 252"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 252"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 253" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 253"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 253"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 254" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -246 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 254"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 254"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 255" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 412, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 255"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 255"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
+[node name="Tall Grass 256" type="Area2D" parent="Floor/Tall Grass"]
+position = Vector2( 429, -232 )
+script = ExtResource( 23 )
+
+[node name="Tall Grass" type="AnimatedSprite" parent="Floor/Tall Grass/Tall Grass 256"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 39 )
+animation = "moving"
+speed_scale = 0.9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Tall Grass/Tall Grass 256"]
+position = Vector2( 1017, 282 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 43 )
+
 [node name="Player House Tiles" type="Node2D" parent="Floor"]
 
 [node name="Tile" type="Sprite" parent="Floor/Player House Tiles"]
-position = Vector2( 1699, 767 )
+position = Vector2( 1819, 919 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 7 )
 offset = Vector2( -868, 178 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 992, 992 )
+region_rect = Rect2( 0, 0, 512, 384 )
 
 [node name="PlayerRoomTile" type="Sprite" parent="Floor/Player House Tiles"]
 position = Vector2( 1629, 1016 )
@@ -5797,41 +8882,42 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 352, 352 )
 
 [node name="Left Wall" type="StaticBody2D" parent="Floor/Player House Tiles"]
+position = Vector2( 240, 0 )
 
 [node name="Left Wall" type="Sprite" parent="Floor/Player House Tiles/Left Wall"]
-position = Vector2( 1025, 856 )
+position = Vector2( 1025, 1008 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 32, 992 )
+region_rect = Rect2( 0, 0, 32, 384 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Player House Tiles/Left Wall"]
-position = Vector2( 1025, 856 )
+position = Vector2( 1025, 1008 )
 scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 17 )
 
 [node name="Right Wall" type="StaticBody2D" parent="Floor/Player House Tiles"]
 
 [node name="Right Wall" type="Sprite" parent="Floor/Player House Tiles/Right Wall"]
-position = Vector2( 1505, 856 )
+position = Vector2( 1505, 1008 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 32, 992 )
+region_rect = Rect2( 0, 0, 32, 384 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Player House Tiles/Right Wall"]
-position = Vector2( 1505, 856 )
+position = Vector2( 1505, 1008 )
 scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 17 )
 
 [node name="Bottom Wall" type="StaticBody2D" parent="Floor/Player House Tiles"]
 
 [node name="Bottom Wall" type="Sprite" parent="Floor/Player House Tiles/Bottom Wall"]
-position = Vector2( 1225, 1096 )
+position = Vector2( 1345, 1096 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 832, 32 )
+region_rect = Rect2( 0, 0, 352, 32 )
 
 [node name="Bottom Wall2" type="Sprite" parent="Floor/Player House Tiles/Bottom Wall"]
 position = Vector2( 1481, 1096 )
@@ -5841,7 +8927,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 64, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Player House Tiles/Bottom Wall"]
-position = Vector2( 1225, 1096 )
+position = Vector2( 1345, 1096 )
 shape = SubResource( 18 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor/Player House Tiles/Bottom Wall"]
@@ -5849,16 +8935,17 @@ position = Vector2( 1481, 1096 )
 shape = SubResource( 19 )
 
 [node name="Top Wall" type="StaticBody2D" parent="Floor/Player House Tiles"]
+position = Vector2( 0, 304 )
 
 [node name="Top Wall" type="Sprite" parent="Floor/Player House Tiles/Top Wall"]
-position = Vector2( 1265, 616 )
+position = Vector2( 1385, 616 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 992, 32 )
+region_rect = Rect2( 0, 0, 512, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Player House Tiles/Top Wall"]
-position = Vector2( 1265, 616 )
+position = Vector2( 1385, 616 )
 shape = SubResource( 20 )
 
 [node name="Door" type="StaticBody2D" parent="Floor/Player House Tiles"]
@@ -5904,6 +8991,38 @@ position = Vector2( 1548, 935 )
 scale = Vector2( 0.05, 0.05 )
 polygon = PoolVector2Array( -140, -140.002, 3380, -140.002, 3380, 3360, 3380, 3380, -140, 3380, -140, 3060, 3060, 3060, 3060, 179.998, 180, 179.998, 180, 3060, -140, 3040 )
 
+[node name="Cliffs" type="Node2D" parent="Floor"]
+
+[node name="Cliff" type="StaticBody2D" parent="Floor/Cliffs"]
+position = Vector2( 3, 1 )
+
+[node name="Cliff" type="Sprite" parent="Floor/Cliffs/Cliff"]
+position = Vector2( 1229, 195 )
+texture = ExtResource( 35 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 173, 32 )
+
+[node name="CliffCol" type="CollisionShape2D" parent="Floor/Cliffs/Cliff"]
+position = Vector2( 1229, 205 )
+rotation = -3.14159
+shape = SubResource( 46 )
+one_way_collision = true
+
+[node name="CliffColLeft" type="CollisionShape2D" parent="Floor/Cliffs/Cliff"]
+position = Vector2( 1142.5, 205 )
+shape = SubResource( 47 )
+
+[node name="CliffColRight" type="CollisionShape2D" parent="Floor/Cliffs/Cliff"]
+position = Vector2( 1315.5, 205 )
+shape = SubResource( 47 )
+
+[node name="Area" type="Area2D" parent="Floor/Cliffs/Cliff"]
+
+[node name="CliffCol" type="CollisionShape2D" parent="Floor/Cliffs/Cliff/Area"]
+position = Vector2( 1229, 205 )
+rotation = -3.14159
+shape = SubResource( 46 )
+
 [node name="Paths" type="Node2D" parent="Floor"]
 
 [node name="PathHorizontal" type="Sprite" parent="Floor/Paths"]
@@ -5943,6 +9062,28 @@ texture = ExtResource( 9 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 200, 32 )
 
+[node name="ThreeWay" type="Sprite" parent="Floor/Paths"]
+position = Vector2( 1475, 246 )
+texture = ExtResource( 33 )
+flip_v = true
+
+[node name="PathHorizontal3" type="Sprite" parent="Floor/Paths"]
+position = Vector2( 1691, 246 )
+texture = ExtResource( 9 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 400, 32 )
+
+[node name="PathChangeDirection3" type="Sprite" parent="Floor/Paths"]
+position = Vector2( 1907, 246 )
+rotation = 1.5708
+texture = ExtResource( 15 )
+
+[node name="PathVertical6" type="Sprite" parent="Floor/Paths"]
+position = Vector2( 1475, 30 )
+texture = ExtResource( 34 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 400 )
+
 [node name="Stairs" type="Node2D" parent="Floor"]
 
 [node name="StairSound" type="AudioStreamPlayer" parent="Floor/Stairs"]
@@ -5950,6 +9091,7 @@ stream = ExtResource( 26 )
 volume_db = 5.244
 
 [node name="Home Stairs" type="Area2D" parent="Floor/Stairs"]
+position = Vector2( 0, 16 )
 
 [node name="Sprite" type="Sprite" parent="Floor/Stairs/Home Stairs"]
 position = Vector2( 1457, 920 )
@@ -5958,7 +9100,7 @@ texture = ExtResource( 18 )
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Stairs/Home Stairs"]
-position = Vector2( 1457, 920 )
+position = Vector2( 1457, 920.5 )
 shape = SubResource( 34 )
 
 [node name="PlayerRoom Stairs" type="Area2D" parent="Floor/Stairs"]
@@ -5971,7 +9113,7 @@ texture = ExtResource( 18 )
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/Stairs/PlayerRoom Stairs"]
-position = Vector2( 1457, 920 )
+position = Vector2( 1457, 920.25 )
 shape = SubResource( 34 )
 
 [node name="Trees" type="Node2D" parent="."]
@@ -5982,393 +9124,744 @@ position = Vector2( -468, 334 )
 
 [node name="Tree" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 13 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree2" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 13 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree2"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree2"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree3" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 13 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree3"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree3"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree4" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 42 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree4"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree4"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree5" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 42 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree5"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree5"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree6" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 42 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree6"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree6"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree7" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 71 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree7"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree7"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree8" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 71 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree8"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree8"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree9" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 71 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree9"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree9"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree10" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 100 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree10"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree10"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree11" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 100 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree11"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree11"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree12" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 100 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree12"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree12"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree13" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 129 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree13"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree13"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree14" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 129 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree14"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree14"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree15" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 129 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree15"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree15"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree22" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 216 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree22"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree22"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree23" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 216 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree23"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree23"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree24" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 216 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree24"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree24"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree25" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 245 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree25"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree25"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree26" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 245 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree26"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree26"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree27" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 245 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree27"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree27"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree28" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 274 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree28"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree28"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree29" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 274 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree29"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree29"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree30" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 274 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree30"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree30"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree31" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 303 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree31"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree31"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree32" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 303 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree32"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree32"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree33" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 303 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree33"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree33"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree34" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 332 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree34"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree34"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree35" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 332 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree35"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree35"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree36" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 332 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree36"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree36"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree37" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 361 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree37"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree37"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree38" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 361 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree38"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree38"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree39" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 361 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree39"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree39"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree40" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 390 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree40"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree40"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree41" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 390 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree41"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree41"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree42" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 390 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree42"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree42"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree43" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 994, 419 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree43"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree43"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree44" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 1014, 419 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree44"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree44"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Tree45" type="StaticBody2D" parent="Trees/Right Trees"]
 position = Vector2( 974, 419 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Trees/Right Trees/Tree45"]
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TreeCol" type="CollisionShape2D" parent="Trees/Right Trees/Tree45"]
 position = Vector2( 0, 1.5 )
 shape = SubResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Top Trees" type="Node2D" parent="Trees"]
 position = Vector2( -468, 247 )
@@ -11012,7 +14505,7 @@ position = Vector2( 974, 261 )
 shape = SubResource( 35 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 1450, 1021 )
+position = Vector2( 1610, 1079 )
 script = ExtResource( 3 )
 
 [node name="PlayerSpriteAnimated" type="AnimatedSprite" parent="Player"]
@@ -11027,13 +14520,19 @@ position = Vector2( 2.5, 5.66736 )
 scale = Vector2( 0.25, 0.25 )
 shape = SubResource( 9 )
 
+[node name="Tweens" type="Node2D" parent="Player"]
+script = ExtResource( 36 )
+
+[node name="CliffTween" type="Tween" parent="Player/Tweens"]
+playback_process_mode = 0
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 1452, 1021 )
+position = Vector2( 1450, 1087 )
 current = true
-zoom = Vector2( 0.25, 0.25 )
-limit_left = 1033
-limit_top = 624
-limit_right = 1529
+zoom = Vector2( 0.13, 0.13 )
+limit_left = 1557
+limit_top = 944
+limit_right = 1733
 limit_bottom = 1120
 limit_smoothed = true
 smoothing_enabled = true
@@ -11222,9 +14721,395 @@ stream = ExtResource( 32 )
 [connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 63/Tall Grass" to="Floor/Tall Grass/Tall Grass 63" method="_on_Tall_Grass_animation_finished"]
 [connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 64" to="Floor/Tall Grass/Tall Grass 64" method="_on_Tall_Grass_1_body_entered"]
 [connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 64/Tall Grass" to="Floor/Tall Grass/Tall Grass 64" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 65" to="Floor/Tall Grass/Tall Grass 65" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 65/Tall Grass" to="Floor/Tall Grass/Tall Grass 65" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 66" to="Floor/Tall Grass/Tall Grass 66" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 66/Tall Grass" to="Floor/Tall Grass/Tall Grass 66" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 67" to="Floor/Tall Grass/Tall Grass 67" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 67/Tall Grass" to="Floor/Tall Grass/Tall Grass 67" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 68" to="Floor/Tall Grass/Tall Grass 68" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 68/Tall Grass" to="Floor/Tall Grass/Tall Grass 68" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 69" to="Floor/Tall Grass/Tall Grass 69" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 69/Tall Grass" to="Floor/Tall Grass/Tall Grass 69" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 70" to="Floor/Tall Grass/Tall Grass 70" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 70/Tall Grass" to="Floor/Tall Grass/Tall Grass 70" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 71" to="Floor/Tall Grass/Tall Grass 71" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 71/Tall Grass" to="Floor/Tall Grass/Tall Grass 71" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 72" to="Floor/Tall Grass/Tall Grass 72" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 72/Tall Grass" to="Floor/Tall Grass/Tall Grass 72" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 73" to="Floor/Tall Grass/Tall Grass 73" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 73/Tall Grass" to="Floor/Tall Grass/Tall Grass 73" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 74" to="Floor/Tall Grass/Tall Grass 74" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 74/Tall Grass" to="Floor/Tall Grass/Tall Grass 74" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 75" to="Floor/Tall Grass/Tall Grass 75" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 75/Tall Grass" to="Floor/Tall Grass/Tall Grass 75" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 76" to="Floor/Tall Grass/Tall Grass 76" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 76/Tall Grass" to="Floor/Tall Grass/Tall Grass 76" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 77" to="Floor/Tall Grass/Tall Grass 77" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 77/Tall Grass" to="Floor/Tall Grass/Tall Grass 77" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 78" to="Floor/Tall Grass/Tall Grass 78" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 78/Tall Grass" to="Floor/Tall Grass/Tall Grass 78" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 79" to="Floor/Tall Grass/Tall Grass 79" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 79/Tall Grass" to="Floor/Tall Grass/Tall Grass 79" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 80" to="Floor/Tall Grass/Tall Grass 80" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 80/Tall Grass" to="Floor/Tall Grass/Tall Grass 80" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 81" to="Floor/Tall Grass/Tall Grass 81" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 81/Tall Grass" to="Floor/Tall Grass/Tall Grass 81" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 82" to="Floor/Tall Grass/Tall Grass 82" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 82/Tall Grass" to="Floor/Tall Grass/Tall Grass 82" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 83" to="Floor/Tall Grass/Tall Grass 83" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 83/Tall Grass" to="Floor/Tall Grass/Tall Grass 83" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 84" to="Floor/Tall Grass/Tall Grass 84" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 84/Tall Grass" to="Floor/Tall Grass/Tall Grass 84" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 85" to="Floor/Tall Grass/Tall Grass 85" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 85/Tall Grass" to="Floor/Tall Grass/Tall Grass 85" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 86" to="Floor/Tall Grass/Tall Grass 86" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 86/Tall Grass" to="Floor/Tall Grass/Tall Grass 86" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 87" to="Floor/Tall Grass/Tall Grass 87" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 87/Tall Grass" to="Floor/Tall Grass/Tall Grass 87" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 88" to="Floor/Tall Grass/Tall Grass 88" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 88/Tall Grass" to="Floor/Tall Grass/Tall Grass 88" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 89" to="Floor/Tall Grass/Tall Grass 89" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 89/Tall Grass" to="Floor/Tall Grass/Tall Grass 89" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 90" to="Floor/Tall Grass/Tall Grass 90" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 90/Tall Grass" to="Floor/Tall Grass/Tall Grass 90" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 91" to="Floor/Tall Grass/Tall Grass 91" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 91/Tall Grass" to="Floor/Tall Grass/Tall Grass 91" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 92" to="Floor/Tall Grass/Tall Grass 92" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 92/Tall Grass" to="Floor/Tall Grass/Tall Grass 92" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 93" to="Floor/Tall Grass/Tall Grass 93" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 93/Tall Grass" to="Floor/Tall Grass/Tall Grass 93" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 94" to="Floor/Tall Grass/Tall Grass 94" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 94/Tall Grass" to="Floor/Tall Grass/Tall Grass 94" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 95" to="Floor/Tall Grass/Tall Grass 95" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 95/Tall Grass" to="Floor/Tall Grass/Tall Grass 95" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 96" to="Floor/Tall Grass/Tall Grass 96" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 96/Tall Grass" to="Floor/Tall Grass/Tall Grass 96" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 97" to="Floor/Tall Grass/Tall Grass 97" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 97/Tall Grass" to="Floor/Tall Grass/Tall Grass 97" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 98" to="Floor/Tall Grass/Tall Grass 98" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 98/Tall Grass" to="Floor/Tall Grass/Tall Grass 98" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 99" to="Floor/Tall Grass/Tall Grass 99" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 99/Tall Grass" to="Floor/Tall Grass/Tall Grass 99" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 100" to="Floor/Tall Grass/Tall Grass 100" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 100/Tall Grass" to="Floor/Tall Grass/Tall Grass 100" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 101" to="Floor/Tall Grass/Tall Grass 101" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 101/Tall Grass" to="Floor/Tall Grass/Tall Grass 101" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 102" to="Floor/Tall Grass/Tall Grass 102" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 102/Tall Grass" to="Floor/Tall Grass/Tall Grass 102" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 103" to="Floor/Tall Grass/Tall Grass 103" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 103/Tall Grass" to="Floor/Tall Grass/Tall Grass 103" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 104" to="Floor/Tall Grass/Tall Grass 104" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 104/Tall Grass" to="Floor/Tall Grass/Tall Grass 104" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 105" to="Floor/Tall Grass/Tall Grass 105" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 105/Tall Grass" to="Floor/Tall Grass/Tall Grass 105" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 106" to="Floor/Tall Grass/Tall Grass 106" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 106/Tall Grass" to="Floor/Tall Grass/Tall Grass 106" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 107" to="Floor/Tall Grass/Tall Grass 107" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 107/Tall Grass" to="Floor/Tall Grass/Tall Grass 107" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 108" to="Floor/Tall Grass/Tall Grass 108" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 108/Tall Grass" to="Floor/Tall Grass/Tall Grass 108" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 109" to="Floor/Tall Grass/Tall Grass 109" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 109/Tall Grass" to="Floor/Tall Grass/Tall Grass 109" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 110" to="Floor/Tall Grass/Tall Grass 110" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 110/Tall Grass" to="Floor/Tall Grass/Tall Grass 110" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 111" to="Floor/Tall Grass/Tall Grass 111" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 111/Tall Grass" to="Floor/Tall Grass/Tall Grass 111" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 112" to="Floor/Tall Grass/Tall Grass 112" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 112/Tall Grass" to="Floor/Tall Grass/Tall Grass 112" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 113" to="Floor/Tall Grass/Tall Grass 113" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 113/Tall Grass" to="Floor/Tall Grass/Tall Grass 113" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 114" to="Floor/Tall Grass/Tall Grass 114" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 114/Tall Grass" to="Floor/Tall Grass/Tall Grass 114" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 115" to="Floor/Tall Grass/Tall Grass 115" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 115/Tall Grass" to="Floor/Tall Grass/Tall Grass 115" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 116" to="Floor/Tall Grass/Tall Grass 116" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 116/Tall Grass" to="Floor/Tall Grass/Tall Grass 116" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 117" to="Floor/Tall Grass/Tall Grass 117" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 117/Tall Grass" to="Floor/Tall Grass/Tall Grass 117" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 118" to="Floor/Tall Grass/Tall Grass 118" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 118/Tall Grass" to="Floor/Tall Grass/Tall Grass 118" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 119" to="Floor/Tall Grass/Tall Grass 119" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 119/Tall Grass" to="Floor/Tall Grass/Tall Grass 119" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 120" to="Floor/Tall Grass/Tall Grass 120" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 120/Tall Grass" to="Floor/Tall Grass/Tall Grass 120" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 121" to="Floor/Tall Grass/Tall Grass 121" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 121/Tall Grass" to="Floor/Tall Grass/Tall Grass 121" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 122" to="Floor/Tall Grass/Tall Grass 122" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 122/Tall Grass" to="Floor/Tall Grass/Tall Grass 122" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 123" to="Floor/Tall Grass/Tall Grass 123" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 123/Tall Grass" to="Floor/Tall Grass/Tall Grass 123" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 124" to="Floor/Tall Grass/Tall Grass 124" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 124/Tall Grass" to="Floor/Tall Grass/Tall Grass 124" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 125" to="Floor/Tall Grass/Tall Grass 125" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 125/Tall Grass" to="Floor/Tall Grass/Tall Grass 125" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 126" to="Floor/Tall Grass/Tall Grass 126" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 126/Tall Grass" to="Floor/Tall Grass/Tall Grass 126" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 127" to="Floor/Tall Grass/Tall Grass 127" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 127/Tall Grass" to="Floor/Tall Grass/Tall Grass 127" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 128" to="Floor/Tall Grass/Tall Grass 128" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 128/Tall Grass" to="Floor/Tall Grass/Tall Grass 128" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 129" to="Floor/Tall Grass/Tall Grass 129" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 129/Tall Grass" to="Floor/Tall Grass/Tall Grass 129" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 130" to="Floor/Tall Grass/Tall Grass 130" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 130/Tall Grass" to="Floor/Tall Grass/Tall Grass 130" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 131" to="Floor/Tall Grass/Tall Grass 131" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 131/Tall Grass" to="Floor/Tall Grass/Tall Grass 131" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 132" to="Floor/Tall Grass/Tall Grass 132" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 132/Tall Grass" to="Floor/Tall Grass/Tall Grass 132" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 133" to="Floor/Tall Grass/Tall Grass 133" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 133/Tall Grass" to="Floor/Tall Grass/Tall Grass 133" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 134" to="Floor/Tall Grass/Tall Grass 134" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 134/Tall Grass" to="Floor/Tall Grass/Tall Grass 134" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 135" to="Floor/Tall Grass/Tall Grass 135" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 135/Tall Grass" to="Floor/Tall Grass/Tall Grass 135" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 136" to="Floor/Tall Grass/Tall Grass 136" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 136/Tall Grass" to="Floor/Tall Grass/Tall Grass 136" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 137" to="Floor/Tall Grass/Tall Grass 137" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 137/Tall Grass" to="Floor/Tall Grass/Tall Grass 137" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 138" to="Floor/Tall Grass/Tall Grass 138" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 138/Tall Grass" to="Floor/Tall Grass/Tall Grass 138" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 139" to="Floor/Tall Grass/Tall Grass 139" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 139/Tall Grass" to="Floor/Tall Grass/Tall Grass 139" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 140" to="Floor/Tall Grass/Tall Grass 140" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 140/Tall Grass" to="Floor/Tall Grass/Tall Grass 140" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 141" to="Floor/Tall Grass/Tall Grass 141" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 141/Tall Grass" to="Floor/Tall Grass/Tall Grass 141" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 142" to="Floor/Tall Grass/Tall Grass 142" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 142/Tall Grass" to="Floor/Tall Grass/Tall Grass 142" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 143" to="Floor/Tall Grass/Tall Grass 143" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 143/Tall Grass" to="Floor/Tall Grass/Tall Grass 143" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 144" to="Floor/Tall Grass/Tall Grass 144" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 144/Tall Grass" to="Floor/Tall Grass/Tall Grass 144" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 145" to="Floor/Tall Grass/Tall Grass 145" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 145/Tall Grass" to="Floor/Tall Grass/Tall Grass 145" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 146" to="Floor/Tall Grass/Tall Grass 146" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 146/Tall Grass" to="Floor/Tall Grass/Tall Grass 146" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 147" to="Floor/Tall Grass/Tall Grass 147" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 147/Tall Grass" to="Floor/Tall Grass/Tall Grass 147" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 148" to="Floor/Tall Grass/Tall Grass 148" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 148/Tall Grass" to="Floor/Tall Grass/Tall Grass 148" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 149" to="Floor/Tall Grass/Tall Grass 149" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 149/Tall Grass" to="Floor/Tall Grass/Tall Grass 149" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 150" to="Floor/Tall Grass/Tall Grass 150" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 150/Tall Grass" to="Floor/Tall Grass/Tall Grass 150" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 151" to="Floor/Tall Grass/Tall Grass 151" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 151/Tall Grass" to="Floor/Tall Grass/Tall Grass 151" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 152" to="Floor/Tall Grass/Tall Grass 152" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 152/Tall Grass" to="Floor/Tall Grass/Tall Grass 152" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 153" to="Floor/Tall Grass/Tall Grass 153" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 153/Tall Grass" to="Floor/Tall Grass/Tall Grass 153" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 154" to="Floor/Tall Grass/Tall Grass 154" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 154/Tall Grass" to="Floor/Tall Grass/Tall Grass 154" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 155" to="Floor/Tall Grass/Tall Grass 155" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 155/Tall Grass" to="Floor/Tall Grass/Tall Grass 155" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 156" to="Floor/Tall Grass/Tall Grass 156" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 156/Tall Grass" to="Floor/Tall Grass/Tall Grass 156" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 157" to="Floor/Tall Grass/Tall Grass 157" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 157/Tall Grass" to="Floor/Tall Grass/Tall Grass 157" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 158" to="Floor/Tall Grass/Tall Grass 158" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 158/Tall Grass" to="Floor/Tall Grass/Tall Grass 158" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 159" to="Floor/Tall Grass/Tall Grass 159" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 159/Tall Grass" to="Floor/Tall Grass/Tall Grass 159" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 160" to="Floor/Tall Grass/Tall Grass 160" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 160/Tall Grass" to="Floor/Tall Grass/Tall Grass 160" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 161" to="Floor/Tall Grass/Tall Grass 161" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 161/Tall Grass" to="Floor/Tall Grass/Tall Grass 161" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 162" to="Floor/Tall Grass/Tall Grass 162" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 162/Tall Grass" to="Floor/Tall Grass/Tall Grass 162" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 163" to="Floor/Tall Grass/Tall Grass 163" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 163/Tall Grass" to="Floor/Tall Grass/Tall Grass 163" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 164" to="Floor/Tall Grass/Tall Grass 164" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 164/Tall Grass" to="Floor/Tall Grass/Tall Grass 164" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 165" to="Floor/Tall Grass/Tall Grass 165" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 165/Tall Grass" to="Floor/Tall Grass/Tall Grass 165" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 166" to="Floor/Tall Grass/Tall Grass 166" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 166/Tall Grass" to="Floor/Tall Grass/Tall Grass 166" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 167" to="Floor/Tall Grass/Tall Grass 167" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 167/Tall Grass" to="Floor/Tall Grass/Tall Grass 167" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 168" to="Floor/Tall Grass/Tall Grass 168" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 168/Tall Grass" to="Floor/Tall Grass/Tall Grass 168" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 169" to="Floor/Tall Grass/Tall Grass 169" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 169/Tall Grass" to="Floor/Tall Grass/Tall Grass 169" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 170" to="Floor/Tall Grass/Tall Grass 170" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 170/Tall Grass" to="Floor/Tall Grass/Tall Grass 170" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 171" to="Floor/Tall Grass/Tall Grass 171" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 171/Tall Grass" to="Floor/Tall Grass/Tall Grass 171" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 172" to="Floor/Tall Grass/Tall Grass 172" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 172/Tall Grass" to="Floor/Tall Grass/Tall Grass 172" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 173" to="Floor/Tall Grass/Tall Grass 173" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 173/Tall Grass" to="Floor/Tall Grass/Tall Grass 173" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 174" to="Floor/Tall Grass/Tall Grass 174" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 174/Tall Grass" to="Floor/Tall Grass/Tall Grass 174" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 175" to="Floor/Tall Grass/Tall Grass 175" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 175/Tall Grass" to="Floor/Tall Grass/Tall Grass 175" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 176" to="Floor/Tall Grass/Tall Grass 176" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 176/Tall Grass" to="Floor/Tall Grass/Tall Grass 176" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 177" to="Floor/Tall Grass/Tall Grass 177" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 177/Tall Grass" to="Floor/Tall Grass/Tall Grass 177" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 178" to="Floor/Tall Grass/Tall Grass 178" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 178/Tall Grass" to="Floor/Tall Grass/Tall Grass 178" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 179" to="Floor/Tall Grass/Tall Grass 179" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 179/Tall Grass" to="Floor/Tall Grass/Tall Grass 179" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 180" to="Floor/Tall Grass/Tall Grass 180" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 180/Tall Grass" to="Floor/Tall Grass/Tall Grass 180" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 181" to="Floor/Tall Grass/Tall Grass 181" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 181/Tall Grass" to="Floor/Tall Grass/Tall Grass 181" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 182" to="Floor/Tall Grass/Tall Grass 182" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 182/Tall Grass" to="Floor/Tall Grass/Tall Grass 182" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 183" to="Floor/Tall Grass/Tall Grass 183" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 183/Tall Grass" to="Floor/Tall Grass/Tall Grass 183" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 184" to="Floor/Tall Grass/Tall Grass 184" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 184/Tall Grass" to="Floor/Tall Grass/Tall Grass 184" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 185" to="Floor/Tall Grass/Tall Grass 185" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 185/Tall Grass" to="Floor/Tall Grass/Tall Grass 185" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 186" to="Floor/Tall Grass/Tall Grass 186" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 186/Tall Grass" to="Floor/Tall Grass/Tall Grass 186" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 187" to="Floor/Tall Grass/Tall Grass 187" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 187/Tall Grass" to="Floor/Tall Grass/Tall Grass 187" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 188" to="Floor/Tall Grass/Tall Grass 188" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 188/Tall Grass" to="Floor/Tall Grass/Tall Grass 188" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 189" to="Floor/Tall Grass/Tall Grass 189" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 189/Tall Grass" to="Floor/Tall Grass/Tall Grass 189" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 190" to="Floor/Tall Grass/Tall Grass 190" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 190/Tall Grass" to="Floor/Tall Grass/Tall Grass 190" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 191" to="Floor/Tall Grass/Tall Grass 191" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 191/Tall Grass" to="Floor/Tall Grass/Tall Grass 191" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 192" to="Floor/Tall Grass/Tall Grass 192" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 192/Tall Grass" to="Floor/Tall Grass/Tall Grass 192" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 193" to="Floor/Tall Grass/Tall Grass 193" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 193/Tall Grass" to="Floor/Tall Grass/Tall Grass 193" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 194" to="Floor/Tall Grass/Tall Grass 194" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 194/Tall Grass" to="Floor/Tall Grass/Tall Grass 194" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 195" to="Floor/Tall Grass/Tall Grass 195" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 195/Tall Grass" to="Floor/Tall Grass/Tall Grass 195" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 196" to="Floor/Tall Grass/Tall Grass 196" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 196/Tall Grass" to="Floor/Tall Grass/Tall Grass 196" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 197" to="Floor/Tall Grass/Tall Grass 197" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 197/Tall Grass" to="Floor/Tall Grass/Tall Grass 197" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 198" to="Floor/Tall Grass/Tall Grass 198" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 198/Tall Grass" to="Floor/Tall Grass/Tall Grass 198" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 199" to="Floor/Tall Grass/Tall Grass 199" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 199/Tall Grass" to="Floor/Tall Grass/Tall Grass 199" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 200" to="Floor/Tall Grass/Tall Grass 200" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 200/Tall Grass" to="Floor/Tall Grass/Tall Grass 200" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 201" to="Floor/Tall Grass/Tall Grass 201" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 201/Tall Grass" to="Floor/Tall Grass/Tall Grass 201" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 202" to="Floor/Tall Grass/Tall Grass 202" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 202/Tall Grass" to="Floor/Tall Grass/Tall Grass 202" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 203" to="Floor/Tall Grass/Tall Grass 203" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 203/Tall Grass" to="Floor/Tall Grass/Tall Grass 203" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 204" to="Floor/Tall Grass/Tall Grass 204" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 204/Tall Grass" to="Floor/Tall Grass/Tall Grass 204" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 205" to="Floor/Tall Grass/Tall Grass 205" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 205/Tall Grass" to="Floor/Tall Grass/Tall Grass 205" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 206" to="Floor/Tall Grass/Tall Grass 206" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 206/Tall Grass" to="Floor/Tall Grass/Tall Grass 206" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 207" to="Floor/Tall Grass/Tall Grass 207" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 207/Tall Grass" to="Floor/Tall Grass/Tall Grass 207" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 208" to="Floor/Tall Grass/Tall Grass 208" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 208/Tall Grass" to="Floor/Tall Grass/Tall Grass 208" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 209" to="Floor/Tall Grass/Tall Grass 209" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 209/Tall Grass" to="Floor/Tall Grass/Tall Grass 209" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 210" to="Floor/Tall Grass/Tall Grass 210" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 210/Tall Grass" to="Floor/Tall Grass/Tall Grass 210" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 211" to="Floor/Tall Grass/Tall Grass 211" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 211/Tall Grass" to="Floor/Tall Grass/Tall Grass 211" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 212" to="Floor/Tall Grass/Tall Grass 212" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 212/Tall Grass" to="Floor/Tall Grass/Tall Grass 212" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 213" to="Floor/Tall Grass/Tall Grass 213" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 213/Tall Grass" to="Floor/Tall Grass/Tall Grass 213" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 214" to="Floor/Tall Grass/Tall Grass 214" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 214/Tall Grass" to="Floor/Tall Grass/Tall Grass 214" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 215" to="Floor/Tall Grass/Tall Grass 215" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 215/Tall Grass" to="Floor/Tall Grass/Tall Grass 215" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 216" to="Floor/Tall Grass/Tall Grass 216" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 216/Tall Grass" to="Floor/Tall Grass/Tall Grass 216" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 217" to="Floor/Tall Grass/Tall Grass 217" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 217/Tall Grass" to="Floor/Tall Grass/Tall Grass 217" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 218" to="Floor/Tall Grass/Tall Grass 218" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 218/Tall Grass" to="Floor/Tall Grass/Tall Grass 218" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 219" to="Floor/Tall Grass/Tall Grass 219" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 219/Tall Grass" to="Floor/Tall Grass/Tall Grass 219" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 220" to="Floor/Tall Grass/Tall Grass 220" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 220/Tall Grass" to="Floor/Tall Grass/Tall Grass 220" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 221" to="Floor/Tall Grass/Tall Grass 221" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 221/Tall Grass" to="Floor/Tall Grass/Tall Grass 221" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 222" to="Floor/Tall Grass/Tall Grass 222" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 222/Tall Grass" to="Floor/Tall Grass/Tall Grass 222" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 223" to="Floor/Tall Grass/Tall Grass 223" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 223/Tall Grass" to="Floor/Tall Grass/Tall Grass 223" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 224" to="Floor/Tall Grass/Tall Grass 224" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 224/Tall Grass" to="Floor/Tall Grass/Tall Grass 224" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 225" to="Floor/Tall Grass/Tall Grass 225" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 225/Tall Grass" to="Floor/Tall Grass/Tall Grass 225" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 226" to="Floor/Tall Grass/Tall Grass 226" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 226/Tall Grass" to="Floor/Tall Grass/Tall Grass 226" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 227" to="Floor/Tall Grass/Tall Grass 227" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 227/Tall Grass" to="Floor/Tall Grass/Tall Grass 227" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 228" to="Floor/Tall Grass/Tall Grass 228" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 228/Tall Grass" to="Floor/Tall Grass/Tall Grass 228" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 229" to="Floor/Tall Grass/Tall Grass 229" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 229/Tall Grass" to="Floor/Tall Grass/Tall Grass 229" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 230" to="Floor/Tall Grass/Tall Grass 230" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 230/Tall Grass" to="Floor/Tall Grass/Tall Grass 230" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 231" to="Floor/Tall Grass/Tall Grass 231" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 231/Tall Grass" to="Floor/Tall Grass/Tall Grass 231" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 232" to="Floor/Tall Grass/Tall Grass 232" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 232/Tall Grass" to="Floor/Tall Grass/Tall Grass 232" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 233" to="Floor/Tall Grass/Tall Grass 233" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 233/Tall Grass" to="Floor/Tall Grass/Tall Grass 233" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 234" to="Floor/Tall Grass/Tall Grass 234" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 234/Tall Grass" to="Floor/Tall Grass/Tall Grass 234" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 235" to="Floor/Tall Grass/Tall Grass 235" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 235/Tall Grass" to="Floor/Tall Grass/Tall Grass 235" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 236" to="Floor/Tall Grass/Tall Grass 236" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 236/Tall Grass" to="Floor/Tall Grass/Tall Grass 236" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 237" to="Floor/Tall Grass/Tall Grass 237" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 237/Tall Grass" to="Floor/Tall Grass/Tall Grass 237" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 238" to="Floor/Tall Grass/Tall Grass 238" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 238/Tall Grass" to="Floor/Tall Grass/Tall Grass 238" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 239" to="Floor/Tall Grass/Tall Grass 239" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 239/Tall Grass" to="Floor/Tall Grass/Tall Grass 239" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 240" to="Floor/Tall Grass/Tall Grass 240" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 240/Tall Grass" to="Floor/Tall Grass/Tall Grass 240" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 241" to="Floor/Tall Grass/Tall Grass 241" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 241/Tall Grass" to="Floor/Tall Grass/Tall Grass 241" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 242" to="Floor/Tall Grass/Tall Grass 242" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 242/Tall Grass" to="Floor/Tall Grass/Tall Grass 242" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 243" to="Floor/Tall Grass/Tall Grass 243" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 243/Tall Grass" to="Floor/Tall Grass/Tall Grass 243" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 244" to="Floor/Tall Grass/Tall Grass 244" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 244/Tall Grass" to="Floor/Tall Grass/Tall Grass 244" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 245" to="Floor/Tall Grass/Tall Grass 245" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 245/Tall Grass" to="Floor/Tall Grass/Tall Grass 245" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 246" to="Floor/Tall Grass/Tall Grass 246" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 246/Tall Grass" to="Floor/Tall Grass/Tall Grass 246" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 247" to="Floor/Tall Grass/Tall Grass 247" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 247/Tall Grass" to="Floor/Tall Grass/Tall Grass 247" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 248" to="Floor/Tall Grass/Tall Grass 248" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 248/Tall Grass" to="Floor/Tall Grass/Tall Grass 248" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 249" to="Floor/Tall Grass/Tall Grass 249" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 249/Tall Grass" to="Floor/Tall Grass/Tall Grass 249" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 250" to="Floor/Tall Grass/Tall Grass 250" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 250/Tall Grass" to="Floor/Tall Grass/Tall Grass 250" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 251" to="Floor/Tall Grass/Tall Grass 251" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 251/Tall Grass" to="Floor/Tall Grass/Tall Grass 251" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 252" to="Floor/Tall Grass/Tall Grass 252" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 252/Tall Grass" to="Floor/Tall Grass/Tall Grass 252" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 253" to="Floor/Tall Grass/Tall Grass 253" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 253/Tall Grass" to="Floor/Tall Grass/Tall Grass 253" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 254" to="Floor/Tall Grass/Tall Grass 254" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 254/Tall Grass" to="Floor/Tall Grass/Tall Grass 254" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 255" to="Floor/Tall Grass/Tall Grass 255" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 255/Tall Grass" to="Floor/Tall Grass/Tall Grass 255" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 256" to="Floor/Tall Grass/Tall Grass 256" method="_on_Tall_Grass_1_body_entered"]
+[connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 256/Tall Grass" to="Floor/Tall Grass/Tall Grass 256" method="_on_Tall_Grass_animation_finished"]
+[connection signal="body_entered" from="Floor/Cliffs/Cliff/Area" to="Player/Tweens" method="_on_Area_body_entered"]
 [connection signal="body_entered" from="Floor/Stairs/Home Stairs" to="Player" method="_on_Home_Stairs_body_entered"]
 [connection signal="body_entered" from="Floor/Stairs/PlayerRoom Stairs" to="Player" method="_on_PlayerRoom_Stairs_body_entered"]
 [connection signal="body_entered" from="Loading Zones/Player House" to="Player" method="_on_Player_House_body_entered"]
 [connection signal="body_shape_entered" from="Loading Zones/PlayerHouse-ToHometown" to="Player" method="_on_PlayerHouseToHometown_body_shape_entered"]
 [connection signal="body_entered" from="Area Zones/HometowntoHotDougRd" to="Area Zones/HometowntoHotDougRd" method="_on_HometowntoHotDougRd_body_entered"]
+[connection signal="tween_all_completed" from="Player/Tweens/CliffTween" to="Player/Tweens" method="_on_CliffTween_tween_all_completed"]
 [connection signal="animation_finished" from="Camera2D/Loading Animation" to="Player" method="_on_Loading_Animation_animation_finished"]

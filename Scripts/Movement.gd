@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
-export (int) var speed = 200
+export (int) var speed = 50
+var baseSpeed = 50
 var velocity = Vector2()
 var currentArea = ""
 var lastActionPressed = ""
@@ -9,35 +10,41 @@ var loading = false
 func _ready():
 	get_parent().get_node("Camera2D").smoothing_enabled = false
 
+# Input
 func get_input():
 	velocity = Vector2()
+	speed = 50
 	
 	if Input.is_action_pressed("right"):
 		lastActionPressed = "right"
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
-			speed = 200
+			if speed != baseSpeed*2:
+				speed *= 2
 		$PlayerSpriteAnimated.play("right")
 		velocity.x += 1
 	if Input.is_action_pressed("left"):
 		lastActionPressed = "left"
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
-			speed = 200
+			if speed != baseSpeed*2:
+				speed *= 2
 		velocity.x -= 1
 		$PlayerSpriteAnimated.play("left")
 	if Input.is_action_pressed("down"):
 		lastActionPressed = "down"
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
-			speed = 200
+			if speed != baseSpeed*2:
+				speed *= 2
 		$PlayerSpriteAnimated.play("forward")
 		velocity.y += 1
 	if Input.is_action_pressed("up"):
 		lastActionPressed = "up"
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
-			speed = 200
+			if speed != baseSpeed*2:
+				speed *= 2
 		$PlayerSpriteAnimated.play("backward")
 		velocity.y -= 1
 	
@@ -48,13 +55,14 @@ func get_input():
 			$PlayerSpriteAnimated.play("idle")
 	
 	velocity = velocity.normalized() * speed
-	speed = 100
+	speed = speed/2
 
 func _physics_process(_delta):
 	if !loading:
 		get_input()
 		velocity = move_and_slide(velocity)
 
+# Houses
 func _on_Player_House_body_entered(_body):
 	loading = true
 	currentArea = "HometowntoPlayerHouse"
@@ -87,16 +95,20 @@ func _on_Loading_Animation_animation_finished(anim_name):
 		get_parent().get_node("Camera2D/Music/Home Song").play()
 		get_parent().get_node("Player").position.x = 1463
 		get_parent().get_node("Player").position.y = 1100
+		get_parent().get_node("Camera2D").zoom.x = 0.13
+		get_parent().get_node("Camera2D").zoom.y = 0.13
 		get_parent().get_node("Camera2D").limit_bottom = 1120
 		get_parent().get_node("Camera2D").limit_right = 1529
-		get_parent().get_node("Camera2D").limit_left = 1033
-		get_parent().get_node("Camera2D").limit_top = 624
+		get_parent().get_node("Camera2D").limit_left = 1273
+		get_parent().get_node("Camera2D").limit_top = 928
 	elif currentArea == "PlayerHousetoHometown":
 		get_parent().get_node("Camera2D").smoothing_enabled = false
 		get_parent().get_node("Camera2D/Music/Home Song").stop()
 		get_parent().get_node("Camera2D/Music/Hometown Song").play()
 		get_parent().get_node("Player").position.x = 820
 		get_parent().get_node("Player").position.y = 258
+		get_parent().get_node("Camera2D").zoom.x = 0.25
+		get_parent().get_node("Camera2D").zoom.y = 0.25
 		get_parent().get_node("Camera2D").limit_bottom = 605
 		get_parent().get_node("Camera2D").limit_right = 2000
 		get_parent().get_node("Camera2D").limit_left = 0
@@ -104,21 +116,17 @@ func _on_Loading_Animation_animation_finished(anim_name):
 	elif currentArea == "PlayerHousetoPlayerRoom":
 		get_parent().get_node("Player").position.x = 1675
 		get_parent().get_node("Player").position.y = 967
-		get_parent().get_node("Camera2D").zoom.x = 0.13
-		get_parent().get_node("Camera2D").zoom.y = 0.13
 		get_parent().get_node("Camera2D").limit_bottom = 1120
 		get_parent().get_node("Camera2D").limit_right = 1733
 		get_parent().get_node("Camera2D").limit_left = 1557
 		get_parent().get_node("Camera2D").limit_top = 944
 	elif currentArea == "PlayerRoomtoPlayerHouse":
-		get_parent().get_node("Player").position.x = 1486
-		get_parent().get_node("Player").position.y = 935
-		get_parent().get_node("Camera2D").zoom.x = 0.25
-		get_parent().get_node("Camera2D").zoom.y = 0.25
+		get_parent().get_node("Player").position.x = 1487
+		get_parent().get_node("Player").position.y = 953
 		get_parent().get_node("Camera2D").limit_bottom = 1120
 		get_parent().get_node("Camera2D").limit_right = 1529
-		get_parent().get_node("Camera2D").limit_left = 1033
-		get_parent().get_node("Camera2D").limit_top = 624
+		get_parent().get_node("Camera2D").limit_left = 1273
+		get_parent().get_node("Camera2D").limit_top = 928
 	
 	loading = false;
 	get_parent().get_node("Camera2D/Fade Out Loading Animation").play("Fade Out Loading Animation")

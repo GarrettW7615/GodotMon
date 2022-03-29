@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fonts/Pokemon Classic.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/Settings.gd" type="Script" id=2]
+[ext_resource path="res://Music/Hometown Song.mp3" type="AudioStream" id=3]
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[node name="SettingsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -401, -225 )
+script = ExtResource( 2 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.803922 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/CenterContainer"]
+margin_left = 531.0
+margin_top = 240.0
+margin_right = 749.0
+margin_bottom = 480.0
+custom_constants/separation = 10
+
+[node name="SettingsLbl" type="Label" parent="Background/CenterContainer/VBoxContainer"]
+margin_right = 218.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 3 )
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="Separator" type="Control" parent="Background/CenterContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 218.0
+margin_bottom = 36.0
+
+[node name="BackBtn" type="Button" parent="Background/CenterContainer/VBoxContainer"]
+margin_top = 46.0
+margin_right = 218.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 1 )
+text = "Back"
+
+[node name="VsyncBtn" type="CheckButton" parent="Background/CenterContainer/VBoxContainer"]
+margin_top = 88.0
+margin_right = 218.0
+margin_bottom = 128.0
+custom_fonts/font = SubResource( 2 )
+text = "Vsync"
+
+[node name="FullscreenBtn" type="CheckButton" parent="Background/CenterContainer/VBoxContainer"]
+margin_top = 138.0
+margin_right = 218.0
+margin_bottom = 178.0
+custom_fonts/font = SubResource( 2 )
+text = "Fullscreen"
+
+[node name="VolumeLbl" type="Label" parent="Background/CenterContainer/VBoxContainer"]
+margin_top = 188.0
+margin_right = 218.0
+margin_bottom = 214.0
+custom_fonts/font = SubResource( 3 )
+text = "Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="Background/CenterContainer/VBoxContainer"]
+margin_top = 224.0
+margin_right = 218.0
+margin_bottom = 240.0
+min_value = -50.0
+max_value = 0.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
