@@ -4,7 +4,7 @@
 [ext_resource path="res://Fonts/Pokemon Classic.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 64
+size = 86
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
 
@@ -31,10 +31,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="TownName" type="Label" parent="FrameImg/CenterContainer"]
-margin_left = 216.0
-margin_top = 308.0
-margin_right = 1064.0
-margin_bottom = 412.0
+margin_left = 69.0
+margin_top = 289.0
+margin_right = 1210.0
+margin_bottom = 430.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 1 )

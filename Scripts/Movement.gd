@@ -59,7 +59,7 @@ func _on_Player_House_body_entered(_body):
 	loading = true
 	currentArea = "HometowntoPlayerHouse"
 	get_parent().get_node("Loading Zones/Player House/DoorSound").play()
-	get_parent().get_node("Player/Camera2D/Loading Animation").play("Loading Animation")
+	get_parent().get_node("Camera2D/Loading Animation").play("Loading Animation")
 
 func _on_PlayerHouseToHometown_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	loading = true
@@ -71,13 +71,13 @@ func _on_Home_Stairs_body_entered(body):
 	loading = true
 	currentArea = "PlayerHousetoPlayerRoom"
 	get_parent().get_node("Floor/Stairs/StairSound").play()
-	get_parent().get_node("Player/Camera2D/Loading Animation").play("Loading Animation")
+	get_parent().get_node("Camera2D/Loading Animation").play("Loading Animation")
 
 func _on_PlayerRoom_Stairs_body_entered(body):
 	loading = true
 	currentArea = "PlayerRoomtoPlayerHouse"
 	get_parent().get_node("Floor/Stairs/StairSound").play()
-	get_parent().get_node("Player/Camera2D/Loading Animation").play("Loading Animation")
+	get_parent().get_node("Camera2D/Loading Animation").play("Loading Animation")
 
 func _on_Loading_Animation_animation_finished(anim_name):
 	get_parent().get_node("Camera2D").smoothing_enabled = false
@@ -106,8 +106,6 @@ func _on_Loading_Animation_animation_finished(anim_name):
 		get_parent().get_node("Player").position.y = 967
 		get_parent().get_node("Camera2D").zoom.x = 0.13
 		get_parent().get_node("Camera2D").zoom.y = 0.13
-		get_parent().get_node("GUI").rect_scale.x = 0.25
-		get_parent().get_node("GUI").rect_scale.y = 0.25
 		get_parent().get_node("Camera2D").limit_bottom = 1120
 		get_parent().get_node("Camera2D").limit_right = 1733
 		get_parent().get_node("Camera2D").limit_left = 1557
@@ -117,8 +115,6 @@ func _on_Loading_Animation_animation_finished(anim_name):
 		get_parent().get_node("Player").position.y = 935
 		get_parent().get_node("Camera2D").zoom.x = 0.25
 		get_parent().get_node("Camera2D").zoom.y = 0.25
-		get_parent().get_node("GUI").rect_scale.x = 0.5
-		get_parent().get_node("GUI").rect_scale.y = 0.5
 		get_parent().get_node("Camera2D").limit_bottom = 1120
 		get_parent().get_node("Camera2D").limit_right = 1529
 		get_parent().get_node("Camera2D").limit_left = 1033

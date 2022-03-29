@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://Spritesheets/grass.png" type="Texture" id=1]
 [ext_resource path="res://Resources/tree.png" type="Texture" id=2]
@@ -29,6 +29,9 @@
 [ext_resource path="res://Scenes/Frame_GUI.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scripts/CameraController.gd" type="Script" id=28]
 [ext_resource path="res://Scripts/Area Zones.gd" type="Script" id=29]
+[ext_resource path="res://Scenes/Battle.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Music/BattleMusic.mp3" type="AudioStream" id=32]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 300 )
@@ -143,14 +146,6 @@ region = Rect2( 0, 32, 32, 32 )
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=31]
-atlas = ExtResource( 13 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=32]
-atlas = ExtResource( 13 )
-region = Rect2( 0, 32, 32, 32 )
-
 [sub_resource type="AtlasTexture" id=33]
 atlas = ExtResource( 14 )
 region = Rect2( 0, 0, 32, 32 )
@@ -161,6 +156,14 @@ region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=30]
 atlas = ExtResource( 12 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 13 )
 region = Rect2( 0, 32, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=14]
@@ -180,11 +183,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 31 ), SubResource( 32 ) ],
-"loop": true,
-"name": "forward",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 33 ) ],
 "loop": true,
 "name": "facingBack",
@@ -193,6 +191,11 @@ animations = [ {
 "frames": [ SubResource( 29 ), SubResource( 30 ) ],
 "loop": true,
 "name": "backward",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 31 ), SubResource( 32 ) ],
+"loop": true,
+"name": "forward",
 "speed": 5.0
 } ]
 
@@ -297,60 +300,55 @@ autoplay = "Grass Animation"
 [node name="Grass5" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass6" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass7" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 0 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass8" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 0 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass4" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 32 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass3" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 32 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass2" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 0 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass9" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 92 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -358,7 +356,6 @@ offset = Vector2( 110, 4 )
 [node name="Grass10" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 92 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -366,6 +363,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass11" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -373,6 +371,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass12" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -380,80 +379,89 @@ offset = Vector2( 78, -28 )
 [node name="Grass13" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 96 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass14" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 96 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass15" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass16" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass17" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass18" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass19" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass20" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass21" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass22" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass23" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass24" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass25" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -461,6 +469,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass26" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -468,6 +477,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass27" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -475,6 +485,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass28" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -482,78 +493,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass29" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass30" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass31" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass32" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass33" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass34" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass35" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass36" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass37" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass38" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass39" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass40" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass41" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -561,6 +585,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass42" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -568,6 +593,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass43" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -575,6 +601,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass44" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -582,78 +609,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass45" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass46" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass47" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass48" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass49" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass50" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass51" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass52" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass53" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass54" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass55" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass56" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass57" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -661,6 +701,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass58" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -668,6 +709,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass59" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -675,6 +717,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass60" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -682,78 +725,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass61" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass62" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass63" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass64" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass65" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass66" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass67" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass68" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass69" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass70" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass71" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass72" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass73" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -761,6 +817,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass74" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -768,6 +825,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass75" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -775,6 +833,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass76" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -782,78 +841,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass77" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass78" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass79" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass80" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass81" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass82" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass83" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass84" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass85" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass86" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass87" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass88" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass89" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -861,6 +933,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass90" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -868,6 +941,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass91" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -875,6 +949,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass92" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -882,78 +957,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass93" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass94" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass95" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass96" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass97" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass98" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass99" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass100" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass101" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass102" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass103" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass104" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass105" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -961,6 +1049,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass106" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -968,6 +1057,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass107" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -975,6 +1065,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass108" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -982,78 +1073,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass109" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass110" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass111" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass112" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass113" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass114" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass115" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass116" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass117" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass118" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass119" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass120" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass121" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1061,6 +1165,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass122" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1068,6 +1173,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass123" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1075,6 +1181,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass124" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1082,78 +1189,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass125" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass126" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass127" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass128" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass129" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass130" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass131" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass132" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass133" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass134" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass135" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass136" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass137" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1161,6 +1281,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass138" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1168,6 +1289,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass139" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1175,6 +1297,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass140" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1182,78 +1305,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass141" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass142" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass143" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass144" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass145" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass146" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass147" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass148" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass149" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass150" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass151" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 32, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass152" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 0, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass153" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1261,6 +1397,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass154" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1268,6 +1405,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass155" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1275,6 +1413,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass156" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1282,78 +1421,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass157" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass158" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass159" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass160" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass161" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass162" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass163" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass164" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass165" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass166" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass167" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass168" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass169" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1361,6 +1513,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass170" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1368,6 +1521,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass171" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1375,6 +1529,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass172" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1382,78 +1537,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass173" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass174" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass175" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass176" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass177" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass178" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass179" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass180" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass181" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass182" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass183" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 160, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass184" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 128, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass185" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1461,6 +1629,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass186" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1468,6 +1637,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass187" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1475,6 +1645,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass188" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1482,78 +1653,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass189" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass190" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass191" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass192" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass193" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass194" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass195" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass196" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass197" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass198" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass199" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass200" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass201" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1561,6 +1745,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass202" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1568,6 +1753,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass203" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1575,6 +1761,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass204" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1582,78 +1769,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass205" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass206" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass207" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass208" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass209" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass210" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass211" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass212" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass213" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass214" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass215" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 288, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass216" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 256, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass217" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1661,6 +1861,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass218" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1668,6 +1869,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass219" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1675,6 +1877,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass220" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1682,78 +1885,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass221" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass222" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass223" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass224" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass225" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass226" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass227" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass228" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass229" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass230" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass231" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass232" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass233" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1761,6 +1977,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass234" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1768,6 +1985,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass235" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1775,6 +1993,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass236" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1782,78 +2001,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass237" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass238" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass239" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass240" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass241" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass242" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass243" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass244" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass245" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass246" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass247" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 416, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass248" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 384, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass249" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1861,6 +2093,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass250" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1868,6 +2101,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass251" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1875,6 +2109,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass252" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1882,78 +2117,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass253" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass254" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass255" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass256" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass257" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass258" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass259" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass260" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass261" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass262" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass263" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass264" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass265" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -1961,6 +2209,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass266" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -1968,6 +2217,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass267" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -1975,6 +2225,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass268" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -1982,78 +2233,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass269" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass270" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass271" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass272" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass273" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass274" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass275" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass276" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass277" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass278" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass279" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass280" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass281" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2061,6 +2325,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass282" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2068,6 +2333,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass283" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2075,6 +2341,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass284" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2082,78 +2349,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass285" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass286" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass287" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass288" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass289" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass290" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass291" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass292" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass293" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass294" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass295" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass296" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass297" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2161,6 +2441,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass298" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2168,6 +2449,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass299" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2175,6 +2457,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass300" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2182,78 +2465,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass301" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass302" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass303" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass304" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass305" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass306" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass307" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass308" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass309" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass310" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass311" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass312" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass313" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2261,6 +2557,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass314" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2268,6 +2565,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass315" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2275,6 +2573,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass316" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2282,78 +2581,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass317" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass318" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass319" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass320" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass321" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass322" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass323" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass324" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass325" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass326" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass327" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass328" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass329" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2361,6 +2673,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass330" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2368,6 +2681,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass331" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2375,6 +2689,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass332" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2382,78 +2697,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass333" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass334" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass335" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass336" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass337" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass338" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass339" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass340" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass341" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass342" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass343" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass344" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass345" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2461,6 +2789,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass346" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2468,6 +2797,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass347" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2475,6 +2805,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass348" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2482,30 +2813,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass349" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass350" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass351" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass352" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass353" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -239 )
@@ -2513,12 +2849,14 @@ offset = Vector2( -76, -239 )
 [node name="Grass354" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass355" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -271 )
@@ -2526,36 +2864,42 @@ offset = Vector2( -76, -271 )
 [node name="Grass356" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass357" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass358" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 32 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass359" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass360" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 0 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass361" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2563,6 +2907,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass362" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2570,6 +2915,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass363" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2577,6 +2923,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass364" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 92 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2584,6 +2931,7 @@ offset = Vector2( 78, -28 )
 [node name="Grass365" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -175 )
@@ -2591,12 +2939,14 @@ offset = Vector2( -76, -175 )
 [node name="Grass366" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 96 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass367" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -207 )
@@ -2604,12 +2954,14 @@ offset = Vector2( -76, -207 )
 [node name="Grass368" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 64 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass369" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -111 )
@@ -2617,12 +2969,14 @@ offset = Vector2( -76, -111 )
 [node name="Grass370" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass371" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -143 )
@@ -2630,36 +2984,42 @@ offset = Vector2( -76, -143 )
 [node name="Grass372" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass373" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass374" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 160 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass375" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass376" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 128 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass377" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2667,6 +3027,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass378" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2674,6 +3035,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass379" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2681,6 +3043,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass380" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 220 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2688,6 +3051,7 @@ offset = Vector2( 78, -28 )
 [node name="Grass381" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -47 )
@@ -2695,12 +3059,14 @@ offset = Vector2( -76, -47 )
 [node name="Grass382" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 224 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass383" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -79 )
@@ -2708,60 +3074,70 @@ offset = Vector2( -76, -79 )
 [node name="Grass384" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 192 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass385" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass386" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass387" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass388" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass389" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass390" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass391" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass392" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass393" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2769,6 +3145,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass394" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2776,6 +3153,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass395" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2783,6 +3161,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass396" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2790,78 +3169,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass397" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass398" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass399" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass400" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass401" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass402" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass403" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass404" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass405" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass406" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass407" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 544, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass408" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 512, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass409" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2869,6 +3261,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass410" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2876,6 +3269,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass411" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2883,6 +3277,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass412" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2890,78 +3285,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass413" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass414" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass415" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass416" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass417" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass418" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass419" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass420" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass421" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass422" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass423" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass424" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass425" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -2969,6 +3377,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass426" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -2976,6 +3385,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass427" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -2983,6 +3393,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass428" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -2990,78 +3401,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass429" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass430" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass431" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass432" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass433" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass434" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass435" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass436" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass437" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass438" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass439" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 672, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass440" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 640, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass441" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3069,6 +3493,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass442" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3076,6 +3501,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass443" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3083,6 +3509,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass444" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3090,78 +3517,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass445" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass446" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass447" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass448" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass449" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass450" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass451" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass452" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass453" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass454" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass455" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass456" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass457" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3169,6 +3609,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass458" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3176,6 +3617,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass459" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3183,6 +3625,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass460" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3190,78 +3633,91 @@ offset = Vector2( 78, -28 )
 [node name="Grass461" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass462" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass463" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass464" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass465" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass466" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass467" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass468" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass469" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass470" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass471" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 800, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass472" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 768, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass473" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3269,6 +3725,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass474" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3276,6 +3733,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass475" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3283,6 +3741,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass476" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3290,30 +3749,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass477" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass478" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass479" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass480" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass481" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 17 )
@@ -3321,12 +3785,14 @@ offset = Vector2( -76, 17 )
 [node name="Grass482" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass483" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, -15 )
@@ -3334,36 +3800,42 @@ offset = Vector2( -76, -15 )
 [node name="Grass484" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass485" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass486" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 288 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass487" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass488" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 256 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass489" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3371,6 +3843,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass490" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3378,6 +3851,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass491" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3385,6 +3859,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass492" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 348 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3392,6 +3867,7 @@ offset = Vector2( 78, -28 )
 [node name="Grass493" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 81 )
@@ -3399,12 +3875,14 @@ offset = Vector2( -76, 81 )
 [node name="Grass494" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 352 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass495" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 49 )
@@ -3412,12 +3890,14 @@ offset = Vector2( -76, 49 )
 [node name="Grass496" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 320 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass497" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 145 )
@@ -3425,12 +3905,14 @@ offset = Vector2( -76, 145 )
 [node name="Grass498" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass499" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 113 )
@@ -3438,36 +3920,42 @@ offset = Vector2( -76, 113 )
 [node name="Grass500" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass501" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass502" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 416 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass503" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 928, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass504" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 896, 384 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass505" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3475,6 +3963,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass506" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3482,6 +3971,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass507" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3489,6 +3979,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass508" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 476 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3496,6 +3987,7 @@ offset = Vector2( 78, -28 )
 [node name="Grass509" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 209 )
@@ -3503,12 +3995,14 @@ offset = Vector2( -76, 209 )
 [node name="Grass510" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 480 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass511" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 177 )
@@ -3516,12 +4010,14 @@ offset = Vector2( -76, 177 )
 [node name="Grass512" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 448 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass513" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3529,6 +4025,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass514" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3536,6 +4033,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass515" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3543,6 +4041,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass516" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3550,30 +4049,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass517" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass518" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass519" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass520" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass521" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3581,6 +4085,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass522" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3588,6 +4093,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass523" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3595,6 +4101,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass524" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3602,30 +4109,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass525" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass526" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass527" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass528" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass529" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3633,6 +4145,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass530" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3640,6 +4153,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass531" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3647,6 +4161,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass532" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3654,30 +4169,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass533" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass534" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass535" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass536" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass537" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3685,6 +4205,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass538" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3692,6 +4213,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass539" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3699,6 +4221,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass540" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3706,30 +4229,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass541" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass542" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass543" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass544" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass545" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3737,6 +4265,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass546" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3744,6 +4273,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass547" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3751,6 +4281,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass548" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3758,30 +4289,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass549" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass550" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass551" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass552" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass553" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3789,6 +4325,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass554" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3796,6 +4333,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass555" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3803,6 +4341,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass556" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3810,30 +4349,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass557" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass558" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass559" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass560" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass561" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3841,6 +4385,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass562" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3848,6 +4393,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass563" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3855,6 +4401,7 @@ offset = Vector2( 110, -28 )
 [node name="Grass564" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3862,30 +4409,35 @@ offset = Vector2( 78, -28 )
 [node name="Grass565" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass566" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass567" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass568" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass569" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3893,6 +4445,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass570" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3900,6 +4453,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass571" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 540 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, -28 )
@@ -3907,7 +4461,6 @@ offset = Vector2( 110, -28 )
 [node name="Grass572" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 540 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, -28 )
@@ -3915,6 +4468,7 @@ offset = Vector2( 78, -28 )
 [node name="Grass573" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 273 )
@@ -3922,12 +4476,14 @@ offset = Vector2( -76, 273 )
 [node name="Grass574" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 544 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass575" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 241 )
@@ -3935,12 +4491,14 @@ offset = Vector2( -76, 241 )
 [node name="Grass576" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 512 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass577" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3948,6 +4506,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass578" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( -78, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3955,18 +4514,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass579" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 96, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass580" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 64, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass581" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -3974,6 +4536,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass582" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 50, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -3981,18 +4544,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass583" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 224, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass584" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 192, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass585" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -4000,6 +4566,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass586" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 178, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -4007,18 +4574,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass587" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 352, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass588" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 320, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass589" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -4026,6 +4596,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass590" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 306, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -4033,18 +4604,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass591" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 480, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass592" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 448, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass593" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -4052,6 +4626,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass594" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 434, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -4059,18 +4634,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass595" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 608, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass596" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 576, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass597" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -4078,6 +4656,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass598" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 562, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -4085,18 +4664,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass599" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 736, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass600" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 704, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass601" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -4104,6 +4686,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass602" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 690, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -4111,18 +4694,21 @@ offset = Vector2( 78, 4 )
 [node name="Grass603" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 864, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass604" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 832, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass605" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 110, 4 )
@@ -4130,6 +4716,7 @@ offset = Vector2( 110, 4 )
 [node name="Grass606" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 818, 572 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( 78, 4 )
@@ -4137,6 +4724,7 @@ offset = Vector2( 78, 4 )
 [node name="Grass607" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 1068, 271 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 offset = Vector2( -76, 305 )
@@ -4144,6 +4732,7 @@ offset = Vector2( -76, 305 )
 [node name="Grass608" type="AnimatedSprite" parent="Floor/Grass Tiles"]
 position = Vector2( 960, 576 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
@@ -10476,18 +11065,34 @@ color = Color( 0, 0, 0, 0 )
 "anims/Fade Out Loading Animation" = SubResource( 24 )
 "anims/Loading Animation" = SubResource( 25 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="HUD" instance=ExtResource( 31 )]
+
+[node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 20 )
 
-[node name="Frame_GUI" parent="CanvasLayer" instance=ExtResource( 27 )]
+[node name="Frame_GUI" parent="UI" instance=ExtResource( 27 )]
 margin_top = -100.0
 margin_bottom = -100.0
+mouse_filter = 2
 
-[node name="FrameSlide" type="AnimationPlayer" parent="CanvasLayer/Frame_GUI"]
+[node name="FrameSlide" type="AnimationPlayer" parent="UI/Frame_GUI"]
 root_node = NodePath("../..")
 "anims/Slide Frame" = SubResource( 45 )
 
-[node name="GUI" parent="CanvasLayer" instance=ExtResource( 19 )]
+[node name="GUI" parent="UI" instance=ExtResource( 19 )]
+mouse_filter = 2
+
+[node name="Battle" type="CanvasLayer" parent="."]
+pause_mode = 2
+layer = 2
+
+[node name="Battle" parent="Battle" instance=ExtResource( 30 )]
+visible = false
+
+[node name="BattleMusic" type="AudioStreamPlayer" parent="Battle/Battle"]
+stream = ExtResource( 32 )
 
 [connection signal="body_entered" from="Floor/Tall Grass/Tall Grass 1" to="Floor/Tall Grass/Tall Grass 1" method="_on_Tall_Grass_1_body_entered"]
 [connection signal="animation_finished" from="Floor/Tall Grass/Tall Grass 1/Tall Grass" to="Floor/Tall Grass/Tall Grass 1" method="_on_Tall_Grass_animation_finished"]
