@@ -21,7 +21,6 @@ func get_input():
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
 				speed *= 2
-		$PlayerSpriteAnimated.play("right")
 		velocity.x += 1
 	if Input.is_action_pressed("left"):
 		lastActionPressed = "left"
@@ -30,14 +29,12 @@ func get_input():
 			if speed != baseSpeed*2:
 				speed *= 2
 		velocity.x -= 1
-		$PlayerSpriteAnimated.play("left")
 	if Input.is_action_pressed("down"):
 		lastActionPressed = "down"
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
 				speed *= 2
-		$PlayerSpriteAnimated.play("forward")
 		velocity.y += 1
 	if Input.is_action_pressed("up"):
 		lastActionPressed = "up"
@@ -45,8 +42,16 @@ func get_input():
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
 				speed *= 2
-		$PlayerSpriteAnimated.play("backward")
 		velocity.y -= 1
+	
+	if Input.is_action_pressed("right"):
+		$PlayerSpriteAnimated.play("right")
+	elif Input.is_action_pressed("left"):
+		$PlayerSpriteAnimated.play("left")
+	elif Input.is_action_pressed("up"):
+		$PlayerSpriteAnimated.play("backward")
+	elif Input.is_action_pressed("down"):
+		$PlayerSpriteAnimated.play("forward")
 	
 	if !Input.is_action_pressed("up") and !Input.is_action_pressed("down") and !Input.is_action_pressed("left") and !Input.is_action_pressed("right"):
 		if lastActionPressed == "up":
@@ -97,6 +102,7 @@ func _on_Loading_Animation_animation_finished(anim_name):
 	if currentArea == "HometowntoPlayerHouse":
 		get_parent().get_node("Camera2D/Music/Hometown Song").stop()
 		get_parent().get_node("Camera2D/Music/Home Song").play()
+		# get_parent().get_node("Camera2D/MusicAnims/HometowntoPlayerHouse").play("HometowntoPlayerHouse")
 		get_parent().get_node("Player").position.x = 1463
 		get_parent().get_node("Player").position.y = 1100
 		get_parent().get_node("Camera2D").zoom.x = 0.13
