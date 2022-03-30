@@ -9,12 +9,10 @@ func _ready():
 	if err != OK:
 		print("Error loading settings")
 	
-	for i in config.get_sections():
-		print(config.get_section_keys(i))
-		print(i)
-	
-	OS.vsync_enabled = config.get_value("Settings", "vsync")
-	OS.window_fullscreen = config.get_value("Settings", "fullscreen")
+	if config.get_value("Settings", "vsync") != null:
+		OS.vsync_enabled = config.get_value("Settings", "vsync")
+	if config.get_value("Settings", "fullscreen") != null:
+		OS.window_fullscreen = config.get_value("Settings", "fullscreen")
 	if config.get_value("Settings", "volume") != null:
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), config.get_value("Settings", "volume"))
 	

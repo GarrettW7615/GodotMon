@@ -9,6 +9,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("pause"):
 		if $SettingsMenu.visible == false:
 			self.isPaused = !isPaused
+			$CenterContainer/VBoxContainer/SaveBtn.text = "Save"
 		else:
 			_on_SettingsBackBtn_pressed()
 
@@ -19,6 +20,7 @@ func set_is_paused(value):
 
 func _on_ResumeBtn_pressed():
 	self.isPaused = false
+	$CenterContainer/VBoxContainer/SaveBtn.text = "Save"
 
 func _on_QuitBtn_pressed():
 	get_tree().quit()
