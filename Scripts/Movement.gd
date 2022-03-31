@@ -16,9 +16,13 @@ func _ready():
 func get_input():
 	velocity = Vector2()
 	speed = 50
+	$PlayerSpriteAnimated.speed_scale = 0.75
 	
 	if Input.is_action_pressed("right"):
 		lastActionPressed = "right"
+		$SelectBox.position.x = 5.3
+		$SelectBox.position.y = 2
+		$SelectBox.rotation = 0
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
@@ -26,6 +30,9 @@ func get_input():
 		velocity.x += 1
 	if Input.is_action_pressed("left"):
 		lastActionPressed = "left"
+		$SelectBox.position.x = -4.7
+		$SelectBox.position.y = 2
+		$SelectBox.rotation = 0
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
@@ -33,6 +40,9 @@ func get_input():
 		velocity.x -= 1
 	if Input.is_action_pressed("down"):
 		lastActionPressed = "down"
+		$SelectBox.position.x = 0.85
+		$SelectBox.position.y = 8.2
+		$SelectBox.rotation = 90
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
@@ -40,6 +50,9 @@ func get_input():
 		velocity.y += 1
 	if Input.is_action_pressed("up"):
 		lastActionPressed = "up"
+		$SelectBox.position.x = 0.85
+		$SelectBox.position.y = -0.8
+		$SelectBox.rotation = 90
 		get_parent().get_node("Camera2D").smoothing_enabled = true
 		if Input.is_action_pressed("Sprint"):
 			if speed != baseSpeed*2:
@@ -48,12 +61,20 @@ func get_input():
 	
 	if Input.is_action_pressed("right"):
 		$PlayerSpriteAnimated.play("right")
+		if Input.is_action_pressed("Sprint"):
+			$PlayerSpriteAnimated.speed_scale = 1.25
 	elif Input.is_action_pressed("left"):
 		$PlayerSpriteAnimated.play("left")
+		if Input.is_action_pressed("Sprint"):
+			$PlayerSpriteAnimated.speed_scale = 1.25
 	elif Input.is_action_pressed("up"):
 		$PlayerSpriteAnimated.play("backward")
+		if Input.is_action_pressed("Sprint"):
+			$PlayerSpriteAnimated.speed_scale = 1.25
 	elif Input.is_action_pressed("down"):
 		$PlayerSpriteAnimated.play("forward")
+		if Input.is_action_pressed("Sprint"):
+			$PlayerSpriteAnimated.speed_scale = 1.25
 	
 	if !Input.is_action_pressed("up") and !Input.is_action_pressed("down") and !Input.is_action_pressed("left") and !Input.is_action_pressed("right"):
 		if lastActionPressed == "up":
