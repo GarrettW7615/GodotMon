@@ -23,6 +23,8 @@ func _ready():
 		get_parent().get_node("Camera2D").limit_right = config.get_value("Camera", "limit_right")
 	if config.get_value("Camera", "limit_bottom") != null:
 		get_parent().get_node("Camera2D").limit_bottom = config.get_value("Camera", "limit_bottom")
+	if config.get_value("Camera", "pos") != null:
+		get_parent().get_node("Camera2D").position = config.get_value("Camera", "pos")
 	if config.get_value("Camera", "zoom_x") != null:
 		get_parent().get_node("Camera2D").zoom.x = config.get_value("Camera", "zoom_x")
 	if config.get_value("Camera", "zoom_y") != null:

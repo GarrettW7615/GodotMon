@@ -16,6 +16,7 @@ func save_state():
 	config.set_value("Camera", "limit_left", get_parent().get_node("Camera2D").limit_left)
 	config.set_value("Camera", "limit_right", get_parent().get_node("Camera2D").limit_right)
 	config.set_value("Camera", "limit_bottom", get_parent().get_node("Camera2D").limit_bottom)
+	config.set_value("Camera", "pos", get_parent().get_node("Camera2D").position)
 	config.set_value("Camera", "zoom_x", get_parent().get_node("Camera2D").zoom.x)
 	config.set_value("Camera", "zoom_y", get_parent().get_node("Camera2D").zoom.y)
 	

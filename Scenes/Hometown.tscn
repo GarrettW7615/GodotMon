@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=2]
+[gd_scene load_steps=141 format=2]
 
 [ext_resource path="res://Spritesheets/grass.png" type="Texture" id=1]
 [ext_resource path="res://Resources/tree.png" type="Texture" id=2]
@@ -44,6 +44,14 @@
 [ext_resource path="res://Scripts/SelectBox.gd" type="Script" id=42]
 [ext_resource path="res://Scenes/TextBoxGUI.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Animations/Slide Text Box Up.tres" type="Animation" id=44]
+[ext_resource path="res://Resources/TF_token.png" type="Texture" id=45]
+[ext_resource path="res://Scripts/player_inventory.gd" type="Script" id=46]
+[ext_resource path="res://Scripts/TF Tokens.gd" type="Script" id=47]
+[ext_resource path="res://Scripts/TFTokens/TF Dollars.gd" type="Script" id=48]
+[ext_resource path="res://Scripts/NPCs/TestNPC.gd" type="Script" id=49]
+[ext_resource path="res://Resources/NPC.png" type="Texture" id=50]
+[ext_resource path="res://Resources/test_npc.png" type="Texture" id=51]
+[ext_resource path="res://Scripts/NPCs/TestHouseNPC.gd" type="Script" id=52]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 512, 300 )
@@ -132,6 +140,141 @@ extents = Vector2( 0.5, 6 )
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 8, 7.25 )
 
+[sub_resource type="AtlasTexture" id=77]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=78]
+atlas = ExtResource( 45 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=79]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=80]
+atlas = ExtResource( 45 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=81]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=82]
+atlas = ExtResource( 45 )
+region = Rect2( 32, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=83]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=84]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=85]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=86]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=87]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=88]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=89]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=90]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=91]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=92]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=93]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=94]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=95]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=96]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=97]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=98]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=99]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=100]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=101]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=102]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=103]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=104]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=105]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=106]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=107]
+atlas = ExtResource( 45 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=108]
+animations = [ {
+"frames": [ SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ), SubResource( 94 ), SubResource( 95 ), SubResource( 96 ), SubResource( 97 ), SubResource( 98 ), SubResource( 99 ), SubResource( 100 ), SubResource( 101 ), SubResource( 102 ), SubResource( 103 ), SubResource( 104 ), SubResource( 105 ), SubResource( 106 ), SubResource( 107 ) ],
+"loop": true,
+"name": "shine",
+"speed": 12.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=109]
+extents = Vector2( 4, 3.5 )
+
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 10, 14.5 )
 
@@ -143,6 +286,9 @@ extents = Vector2( 15, 5 )
 
 [sub_resource type="RectangleShape2D" id=35]
 extents = Vector2( 0, 27.5 )
+
+[sub_resource type="RectangleShape2D" id=110]
+extents = Vector2( 9.5, 3 )
 
 [sub_resource type="AtlasTexture" id=52]
 atlas = ExtResource( 40 )
@@ -341,7 +487,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=76]
 resource_name = "Slide Text Box Down"
-length = 0.5
+length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 1
@@ -349,7 +495,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
+"times": PoolRealArray( 0, 0.25 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 163 ) ]
@@ -378,6 +524,9 @@ script = ExtResource( 14 )
 
 [node name="Load" type="Node2D" parent="."]
 script = ExtResource( 41 )
+
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource( 46 )
 
 [node name="Floor" type="Area2D" parent="."]
 position = Vector2( 16, 16 )
@@ -9631,7 +9780,29 @@ flip_h = true
 position = Vector2( 1457, 920.25 )
 shape = SubResource( 34 )
 
-[node name="ItemCoins" type="Node2D" parent="."]
+[node name="TF Tokens" type="Node2D" parent="."]
+script = ExtResource( 47 )
+
+[node name="TFToken" type="StaticBody2D" parent="TF Tokens"]
+position = Vector2( 1928, -57 )
+script = ExtResource( 48 )
+
+[node name="TFTokenSprite" type="AnimatedSprite" parent="TF Tokens/TFToken"]
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 108 )
+animation = "shine"
+frame = 15
+playing = true
+
+[node name="Col" type="CollisionShape2D" parent="TF Tokens/TFToken"]
+position = Vector2( 0, 1.5 )
+shape = SubResource( 109 )
+
+[node name="Identifier" type="Label" parent="TF Tokens/TFToken"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "tf_token"
 
 [node name="Trees" type="Node2D" parent="."]
 position = Vector2( 468, -247 )
@@ -15969,6 +16140,57 @@ script = ExtResource( 29 )
 [node name="ZoneCol" type="CollisionShape2D" parent="Area Zones/HometowntoHotDougRd"]
 position = Vector2( 964, 261 )
 shape = SubResource( 35 )
+
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="TestNPC" type="StaticBody2D" parent="NPCs"]
+position = Vector2( 630, 266 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 49 )
+
+[node name="Shadow" type="Sprite" parent="NPCs/TestNPC"]
+modulate = Color( 1, 1, 1, 0.65098 )
+position = Vector2( -2, 6 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 38 )
+
+[node name="TestNPCSprite" type="Sprite" parent="NPCs/TestNPC"]
+position = Vector2( 0, -6 )
+texture = ExtResource( 50 )
+
+[node name="Col" type="CollisionShape2D" parent="NPCs/TestNPC"]
+position = Vector2( 0.5, 4.5 )
+shape = SubResource( 110 )
+
+[node name="Identifier" type="Label" parent="NPCs/TestNPC"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "npc"
+
+[node name="TestHouseNPC" type="StaticBody2D" parent="NPCs"]
+position = Vector2( 1409, 1080 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 52 )
+
+[node name="Shadow" type="Sprite" parent="NPCs/TestHouseNPC"]
+modulate = Color( 1, 1, 1, 0.65098 )
+position = Vector2( -2, 8 )
+texture = ExtResource( 38 )
+
+[node name="TestNPCSprite" type="Sprite" parent="NPCs/TestHouseNPC"]
+position = Vector2( 0, -6 )
+texture = ExtResource( 51 )
+
+[node name="Col" type="CollisionShape2D" parent="NPCs/TestHouseNPC"]
+position = Vector2( 0.5, 7 )
+shape = SubResource( 110 )
+
+[node name="Identifier" type="Label" parent="NPCs/TestHouseNPC"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "npc"
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 1613, 1079.85 )
