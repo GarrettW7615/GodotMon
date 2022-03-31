@@ -7,7 +7,7 @@ var body_node
 
 func _unhandled_input(event):
 	if event.is_action_pressed("select"):
-		if body_entered == true:
+		if body_entered == true && body_node.get_node("Identifier") != null:
 			if textbox_showing == false:
 				# Textbox pop-up
 				textbox_showing = true
