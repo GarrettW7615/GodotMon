@@ -11,14 +11,13 @@ func _on_HometowntoHotDougRd_body_entered(body):
 		targetPos.x += 25
 		
 		get_parent().get_parent().get_node("Player").loading = true
-		get_parent().get_parent().get_node("Player/PlayerSpriteAnimated").play("idle")
 		get_parent().get_parent().get_node("UI/Frame_GUI/Frame/FrameImg/CenterContainer/TownName").text = "Route 1"
 		get_parent().get_parent().get_node("UI/Frame_GUI/FrameSlide").stop()
 		get_parent().get_parent().get_node("UI/Frame_GUI/FrameSlide").play("Slide Frame")
 		get_parent().get_parent().get_node("Camera2D").limit_top = -553
 		get_parent().get_parent().get_node("Camera2D").limit_left = 964
 		get_parent().get_parent().get_node("Camera2D").limit_bottom = 846
-		get_parent().get_parent().get_node("Camera2D").limit_right = 2000
+		get_parent().get_parent().get_node("Camera2D").limit_right = 2524
 		
 		get_parent().get_parent().get_node("Camera2D/Music/Hometown Song").stop()
 		get_parent().get_parent().get_node("Camera2D/Music/Route1").play()
@@ -30,6 +29,7 @@ func _on_HometowntoHotDougRd_body_entered(body):
 		
 		targetPos.x -= 25
 		
+		get_parent().get_parent().get_node("Player").loading = true
 		get_parent().get_parent().get_node("UI/Frame_GUI/Frame/FrameImg/CenterContainer/TownName").text = "Doug Village"
 		get_parent().get_parent().get_node("UI/Frame_GUI/FrameSlide").stop()
 		get_parent().get_parent().get_node("UI/Frame_GUI/FrameSlide").play("Slide Frame")
@@ -43,5 +43,6 @@ func _on_HometowntoHotDougRd_body_entered(body):
 		
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").interpolate_property(get_parent().get_parent().get_node("Player"), "position", get_parent().get_parent().get_node("Player").position, targetPos, 0.75, Tween.TRANS_LINEAR)
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").start()
-	
+
+func _on_SwitchZoneTwn_tween_completed(object, key):
 	get_parent().get_parent().get_node("Player").loading = false

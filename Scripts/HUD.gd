@@ -12,17 +12,21 @@ func _unhandled_input(event):
 		_on_ItemsBtn_press()
 
 func _on_InvBackBtn_press():
+	get_parent().get_node("Player").loading = false
 	$HUD.visible = true
 	$Inventory.visible = false
 
 func _on_TFBackBtn_press():
+	get_parent().get_node("Player").loading = false
 	$HUD.visible = true
 	$TFs.visible = false
 
 func _on_ItemsBtn_press():
+	get_parent().get_node("Player").loading = true
 	$HUD.visible = false
 	$Inventory.visible = true
 
 func _on_TFBtn_press():
+	get_parent().get_node("Player").loading = true
 	$HUD.visible = false
 	$TFs.visible = true
