@@ -130,6 +130,7 @@ func _on_Loading_Animation_animation_finished(anim_name):
 		get_parent().get_node("Camera2D/Music/Hometown Song").stop()
 		if get_parent().get_node("Camera2D/Music/Home Song").playing == false:
 			get_parent().get_node("Camera2D/Music/Home Song").play()
+			get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_node("Camera2D/Music/Home Song")
 		# get_parent().get_node("Camera2D/MusicAnims/HometowntoPlayerHouse").play("HometowntoPlayerHouse")
 		if coming_from == "player_room":
 			get_parent().get_node("Player").position.x = 1487
@@ -151,6 +152,7 @@ func _on_Loading_Animation_animation_finished(anim_name):
 		get_parent().get_node("Camera2D/Music/Home Song").stop()
 		if get_parent().get_node("Camera2D/Music/Hometown Song").playing == false:
 			get_parent().get_node("Camera2D/Music/Hometown Song").play()
+			get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_node("Camera2D/Music/Hometown Song")
 		get_parent().get_node("Player").position.x = 820
 		get_parent().get_node("Player").position.y = 258
 		get_parent().get_node("Camera2D").zoom.x = 0.25

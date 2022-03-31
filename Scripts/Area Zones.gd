@@ -19,8 +19,9 @@ func _on_HometowntoHotDougRd_body_entered(body):
 		get_parent().get_parent().get_node("Camera2D").limit_bottom = 846
 		get_parent().get_parent().get_node("Camera2D").limit_right = 2524
 		
-		get_parent().get_parent().get_node("Camera2D/Music/Hometown Song").stop()
+		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying.stop()
 		get_parent().get_parent().get_node("Camera2D/Music/Route1").play()
+		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_node("Camera2D/Music/Route1")
 		
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").interpolate_property(get_parent().get_parent().get_node("Player"), "position", get_parent().get_parent().get_node("Player").position, targetPos, 0.75, Tween.TRANS_LINEAR)
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").start()
@@ -38,8 +39,9 @@ func _on_HometowntoHotDougRd_body_entered(body):
 		get_parent().get_parent().get_node("Camera2D").limit_left = 0
 		get_parent().get_parent().get_node("Camera2D").limit_top = 0
 		
+		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying.stop()
 		get_parent().get_parent().get_node("Camera2D/Music/Hometown Song").play()
-		get_parent().get_parent().get_node("Camera2D/Music/Route1").stop()
+		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_node("Camera2D/Music/Hometown Song")
 		
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").interpolate_property(get_parent().get_parent().get_node("Player"), "position", get_parent().get_parent().get_node("Player").position, targetPos, 0.75, Tween.TRANS_LINEAR)
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").start()

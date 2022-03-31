@@ -14,6 +14,11 @@ func _unhandled_input(event):
 				get_parent().get_parent().get_node("HUD/TextBoxGUI/TextBox/Box/BoxText").text = body_node.found_text
 				get_parent().get_parent().get_node("HUD/TextBoxGUI/TextSlide").play("Slide Text Box Up")
 				
+				# Sound effect
+				if body_node.get_node("Identifier").text == "tf_token":
+					get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying.stream_paused = true
+					get_parent().get_parent().get_node("Sound Effects/Item Found").play()
+				
 				# Handle animations
 				get_parent().loading = true
 				if get_parent().lastActionPressed == "up":
@@ -31,6 +36,7 @@ func _unhandled_input(event):
 				
 				# Handle TF Tokens
 				if body_node.get_node("Identifier").text == "tf_token":
+					get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying.stream_paused = false
 					body_node.visible = false
 					body_node.get_node("Col").disabled = true
 				

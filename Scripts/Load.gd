@@ -35,6 +35,7 @@ func _ready():
 		var song = config.get_value("Music", "currently_playing")
 		print("Playing: " + song)
 		get_parent().get_node(song).play()
+		get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_node(song)
 	else:
 		if get_parent().get_node("Player").currentArea == "player_house":
 			get_parent().get_node("Camera2D/Music/Home Song").play()
