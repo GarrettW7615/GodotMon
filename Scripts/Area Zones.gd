@@ -41,7 +41,7 @@ func _on_HometowntoHotDougRd_body_entered(body):
 		
 		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying.stop()
 		get_parent().get_parent().get_node("Camera2D/Music/Hometown Song").play()
-		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_node("Camera2D/Music/Hometown Song")
+		get_parent().get_parent().get_node("Camera2D/Music").currentlyPlaying = get_parent().get_parent().get_node("Camera2D/Music/Hometown Song")
 		
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").interpolate_property(get_parent().get_parent().get_node("Player"), "position", get_parent().get_parent().get_node("Player").position, targetPos, 0.75, Tween.TRANS_LINEAR)
 		get_parent().get_parent().get_node("Player/Tweens/SwitchZoneTwn").start()

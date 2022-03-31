@@ -336,6 +336,10 @@ region = Rect2( 32, 0, 32, 32 )
 atlas = ExtResource( 40 )
 region = Rect2( 32, 0, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 32, 32 )
+
 [sub_resource type="AtlasTexture" id=71]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 32, 32 )
@@ -368,10 +372,6 @@ region = Rect2( 0, 32, 32, 32 )
 atlas = ExtResource( 12 )
 region = Rect2( 32, 32, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=66]
-atlas = ExtResource( 12 )
-region = Rect2( 0, 0, 32, 32 )
-
 [sub_resource type="SpriteFrames" id=14]
 animations = [ {
 "frames": [ SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ) ],
@@ -399,6 +399,11 @@ animations = [ {
 "name": "idleLeft",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 66 ) ],
+"loop": true,
+"name": "facingBack",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ) ],
 "loop": true,
 "name": "forward",
@@ -407,11 +412,6 @@ animations = [ {
 "frames": [ SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ) ],
 "loop": true,
 "name": "backward",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 66 ) ],
-"loop": true,
-"name": "facingBack",
 "speed": 5.0
 } ]
 
@@ -561,53 +561,51 @@ __meta__ = {
 [node name="Grass1" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1204, 86 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass2" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1300, 54 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass3" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1184, 278 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass4" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1364, -234 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass5" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1556, -42 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass6" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1652, 54 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass7" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1812, 22 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass8" type="AnimatedSprite" parent="Floor/Flower Tiles/Route 1"]
 position = Vector2( 1812, 150 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
@@ -616,80 +614,76 @@ playing = true
 [node name="Grass1" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 651, 182 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass2" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 587, 310 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass3" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 203, 342 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass4" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 395, 246 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass5" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 843, 310 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass6" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 75, 214 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass7" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 683, 438 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass8" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 907, 54 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass9" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 331, 54 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass10" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 75, 470 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass11" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 395, 470 )
 frames = SubResource( 6 )
-frame = 1
 speed_scale = 0.25
 playing = true
 
 [node name="Grass12" type="AnimatedSprite" parent="Floor/Flower Tiles/Hometown"]
 position = Vector2( 587, 86 )
 frames = SubResource( 6 )
+frame = 1
 speed_scale = 0.25
 playing = true
 
@@ -7062,7 +7056,7 @@ script = ExtResource( 48 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 108 )
 animation = "shine"
-frame = 10
+frame = 21
 playing = true
 
 [node name="Col" type="CollisionShape2D" parent="TF Tokens/TFToken"]
